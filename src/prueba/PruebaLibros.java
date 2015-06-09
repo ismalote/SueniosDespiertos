@@ -2,15 +2,10 @@ package prueba;
 
 import java.util.List;
 
-import implementaciones.ABB;
-import implementaciones.DiccionarioMultiple;
+import implementaciones.*;
 import libros.Libro;
-import implementaciones.Cola;
-import tdas.ColaTDA;
-import tdas.ConjuntoTDA;
-import tdas.DiccionarioMultipleTDA;
+import tdas.*;
 import enums.Genero;
-import tdas.ABBTDA;
 
 public class PruebaLibros {
 	
@@ -116,10 +111,54 @@ public class PruebaLibros {
 		return cola;
 	}
 	
-	public Genero ObtenerGeneroPrincipal(ABBTDA a){
-		// TODO falta hacer este método
-		return null;
+	public static Genero ObtenerGeneroPrincipal(ABBTDA a){
+		Genero generoPrincipal = null;
+		int cantidadMayor = 0;
+		ConjuntoTDA claves = null;
+		
+		DiccionarioSimpleTDA dicc = new DiccionarioSimple();
+		dicc.InicializarDiccionario();
+				
+		dicc.Agregar(Genero.TRAGEDIA, ObtenerCantidadLibros(a, Genero.TRAGEDIA));
+		dicc.Agregar(Genero.COMEDIA, ObtenerCantidadLibros(a, Genero.COMEDIA));
+		dicc.Agregar(Genero.MELODRAMA, ObtenerCantidadLibros(a, Genero.MELODRAMA));
+		dicc.Agregar(Genero.TRAGICOMEDIA, ObtenerCantidadLibros(a, Genero.TRAGICOMEDIA));
+		dicc.Agregar(Genero.FARSA, ObtenerCantidadLibros(a, Genero.FARSA));
+		dicc.Agregar(Genero.EPICO, ObtenerCantidadLibros(a, Genero.EPICO));
+		dicc.Agregar(Genero.LIRICO, ObtenerCantidadLibros(a, Genero.LIRICO));
+		dicc.Agregar(Genero.DRAMATICO, ObtenerCantidadLibros(a, Genero.DRAMATICO));
+		
+		claves = dicc.Claves();
+		
+		// Calculo la mayor cantidad, luego retorno el género con mayor cantidad de libros.
+		while (!claves.ConjuntoVacio()) {
+			Genero clave = (Genero)claves.Elegir();
+			int cantidad = (int)dicc.Recuperar(clave);
+			
+			if (cantidad > cantidadMayor) {
+				cantidadMayor = cantidad;
+				generoPrincipal = clave;
+			}
+			
+			claves.Sacar(clave);
+		}
+		
+		return generoPrincipal;
 	}
+	
+	private static int ObtenerCantidadLibros(ABBTDA a, Genero gen) {
+		int cantidad = 0;
+		
+		ColaTDA cola = ObtenerLibrosSegunGenero(a, gen);
+		
+		while (!cola.ColaVacia()) {
+			cantidad++;
+			cola.Desacolar();
+		}
+		
+		return cantidad;
+	}
+	
 	
 	public static void main(String[] args) {
 		ABBTDA abb = new ABB();
@@ -262,6 +301,16 @@ public class PruebaLibros {
 			}
 		}
 		
+		System.out.println();
+		System.out.println("---------------------------------------");
+		System.out.println();
+		
+		System.out.println("GÉNERO PRINCIPAL");
+		System.out.println();
+		
+		Genero genero = ObtenerGeneroPrincipal(abb);
+		
+		System.out.println(genero.toString());
 	}
 
 }
