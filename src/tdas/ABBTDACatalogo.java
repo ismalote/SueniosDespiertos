@@ -27,7 +27,7 @@ public interface ABBTDACatalogo {
 	 * Si el género no existe, se crea primero el género y luego se incorpora el libro.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: La estructura se ve modificada con un elemento en más. */
-	public void AgregarLibro(Genero genero, Libro libro);
+	public void AgregarLibro(Libro libro);
 	
 	/* Elimina un género de la estructura y todos sus libros. 
 	 * Reacomoda los restantes géneros del catálogo.
@@ -35,12 +35,13 @@ public interface ABBTDACatalogo {
 	 * Pos-condiciones: La estructura se ve modificada con un elemento en menos, si existe el género. */
 	public void EliminarGenero(Genero genero);
 	
-	/* Elimina un libro asociado a un género. Si es el único libro, elimina también el género.
+	/* Elimina una sola ocurrencia de un libro asociado a un género.
+	 * Si es el único libro, elimina también el género.
 	 * Pre-condiciones: La estructura tiene que estar inicializada y el género del libro debe existir.
 	 * Pos-condiciones: La estructura se ve modificada con un libro en menos, 
 	 * si tanto el género como el libro existen. 
 	 * Si el género del libro no existe, no hace nada. */
-	public void EliminarLibro(Genero genero, Libro libro);
+	public void EliminarLibro(Libro libro);
 	
 	/* Devuelve el Género que está en la raíz del catálogo o nulo si el árbol es nulo.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.

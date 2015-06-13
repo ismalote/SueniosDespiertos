@@ -2,22 +2,25 @@ package prueba;
 
 import java.util.List;
 
+import clases.Genero;
+import clases.Libro;
 import implementaciones.*;
-import libros.Libro;
 import tdas.*;
-import enums.Genero;
 
 public class PruebaLibros {
 	
-	public static ColaTDA ObtenerLibrosSegunGenero(ABBTDA a, Genero gen){
+	public static ColaTDA ObtenerLibrosSegunGenero(ABBTDACatalogo a, Genero gen){
 		ColaTDA cola = new Cola();
 		cola.InicializarCola();
 		
 		if(!a.ArbolVacio()){
-			if(a.ObtenerGenero().equals(gen)){
-				for(int i=0 ; i < a.Libros().size() ; i++)
-					cola.Acolar(a.Libros().get(i));
-			}else if(a.ObtenerGenero().compareTo(gen) < 0){
+			if(a.ObtenerGenero().getNombre().equals(gen.getNombre())){
+				ColaTDA aux = a.ObtenerGenero().getLibros();
+				while(!aux.ColaVacia()){
+					cola.Acolar(aux.Primero());
+					aux.Desacolar();
+				}
+			}else if(a.ObtenerGenero().getNombre().compareTo(gen.getNombre()) < 0){
 				ColaTDA colaDer = ObtenerLibrosSegunGenero(a.HijoDer(), gen);
 				
 				while(!colaDer.ColaVacia()){
@@ -25,7 +28,7 @@ public class PruebaLibros {
 					colaDer.Desacolar();
 				}
 				
-			}else if(a.ObtenerGenero().compareTo(gen) > 0){
+			}else if(a.ObtenerGenero().getNombre().compareTo(gen.getNombre()) > 0){
 				ColaTDA colaIzq = ObtenerLibrosSegunGenero(a.HijoIzq(), gen);
 				
 				while(!colaIzq.ColaVacia()){
@@ -38,16 +41,20 @@ public class PruebaLibros {
 		return cola;
 	}
 	
-	public static DiccionarioMultipleTDA ObtenerLibrosPorPrecio(ABBTDA a, double price){
+	
+	public static DiccionarioMultipleTDA ObtenerLibrosPorPrecio(ABBTDACatalogo a, double price){
+		// TODO hay que revisar este metodo
+		
 		DiccionarioMultipleTDA dic = new DiccionarioMultiple();
 		dic.InicializarDiccionario();
 		
 		if(!a.ArbolVacio()){
-			List<Libro> books = a.Libros();
-			for(int i=0 ; i < books.size() ; i++){
-				if(books.get(i).getPrecio() < price){
-					dic.Agregar(books.get(i).getGenero(), books.get(i));
+			ColaTDA books = a.ObtenerGenero().getLibros();
+			while(!books.ColaVacia()){
+				if(((Libro) books.Primero()).getPrecio() < price){
+					dic.Agregar(((Libro) books.Primero()).getGenero(), books.Primero());
 				}
+				books.Desacolar();
 			}
 			DiccionarioMultipleTDA dicIzq = ObtenerLibrosPorPrecio(a.HijoIzq(), price);
 			DiccionarioMultipleTDA dicDer = ObtenerLibrosPorPrecio(a.HijoDer(), price);
@@ -82,16 +89,17 @@ public class PruebaLibros {
 		return dic;
 	}
 	
-	public ColaTDA ObtenerLibrosSegunAutor(ABBTDA a, String autor){
+	public ColaTDA ObtenerLibrosSegunAutor(ABBTDACatalogo a, String autor){
 		ColaTDA cola = new Cola();
 		cola.InicializarCola();
 		
 		if(!a.ArbolVacio()){
-			List<Libro> books = a.Libros();
-			for(int i=0 ; i < books.size() ; i++){
-				if(books.get(i).getAutor().equals(autor)){
-					cola.Acolar(books.get(i));
+			ColaTDA books = a.ObtenerGenero().getLibros();
+			while(!books.ColaVacia()){
+				if(((Libro) books.Primero()).getAutor().equals(autor)){
+					cola.Acolar(books.Primero());
 				}
+				books.Desacolar();
 			}
 			
 			ColaTDA colaIzq = ObtenerLibrosSegunAutor(a.HijoIzq(), autor);
@@ -111,7 +119,13 @@ public class PruebaLibros {
 		return cola;
 	}
 	
-	public static Genero ObtenerGeneroPrincipal(ABBTDA a){
+	
+	
+	
+	public static Genero ObtenerGeneroPrincipal(ABBTDACatalogo a){
+		
+		// TODO hay que arreglar este metodo
+		
 		Genero generoPrincipal = null;
 		int cantidadMayor = 0;
 		ConjuntoTDA claves = null;
@@ -119,14 +133,14 @@ public class PruebaLibros {
 		DiccionarioSimpleTDA dicc = new DiccionarioSimple();
 		dicc.InicializarDiccionario();
 				
-		dicc.Agregar(Genero.TRAGEDIA, ObtenerCantidadLibros(a, Genero.TRAGEDIA));
-		dicc.Agregar(Genero.COMEDIA, ObtenerCantidadLibros(a, Genero.COMEDIA));
-		dicc.Agregar(Genero.MELODRAMA, ObtenerCantidadLibros(a, Genero.MELODRAMA));
-		dicc.Agregar(Genero.TRAGICOMEDIA, ObtenerCantidadLibros(a, Genero.TRAGICOMEDIA));
-		dicc.Agregar(Genero.FARSA, ObtenerCantidadLibros(a, Genero.FARSA));
-		dicc.Agregar(Genero.EPICO, ObtenerCantidadLibros(a, Genero.EPICO));
-		dicc.Agregar(Genero.LIRICO, ObtenerCantidadLibros(a, Genero.LIRICO));
-		dicc.Agregar(Genero.DRAMATICO, ObtenerCantidadLibros(a, Genero.DRAMATICO));
+//		dicc.Agregar(Genero.TRAGEDIA, ObtenerCantidadLibros(a, Genero.TRAGEDIA));
+//		dicc.Agregar(Genero.COMEDIA, ObtenerCantidadLibros(a, Genero.COMEDIA));
+//		dicc.Agregar(Genero.MELODRAMA, ObtenerCantidadLibros(a, Genero.MELODRAMA));
+//		dicc.Agregar(Genero.TRAGICOMEDIA, ObtenerCantidadLibros(a, Genero.TRAGICOMEDIA));
+//		dicc.Agregar(Genero.FARSA, ObtenerCantidadLibros(a, Genero.FARSA));
+//		dicc.Agregar(Genero.EPICO, ObtenerCantidadLibros(a, Genero.EPICO));
+//		dicc.Agregar(Genero.LIRICO, ObtenerCantidadLibros(a, Genero.LIRICO));
+//		dicc.Agregar(Genero.DRAMATICO, ObtenerCantidadLibros(a, Genero.DRAMATICO));
 		
 		claves = dicc.Claves();
 		
@@ -146,7 +160,7 @@ public class PruebaLibros {
 		return generoPrincipal;
 	}
 	
-	private static int ObtenerCantidadLibros(ABBTDA a, Genero gen) {
+	private static int ObtenerCantidadLibros(ABBTDACatalogo a, Genero gen) {
 		int cantidad = 0;
 		
 		ColaTDA cola = ObtenerLibrosSegunGenero(a, gen);
@@ -161,54 +175,38 @@ public class PruebaLibros {
 	
 	
 	public static void main(String[] args) {
-		ABBTDA abb = new ABB();
+		ABBTDACatalogo abb = new ABBCatalogo();
+		abb.Inicializar();
 		
-		abb.AgregarGenero(Genero.COMEDIA);
-		abb.AgregarGenero(Genero.DRAMATICO);
-		abb.AgregarGenero(Genero.EPICO);
-		abb.AgregarGenero(Genero.FARSA);
-		abb.AgregarGenero(Genero.LIRICO);
-		abb.AgregarGenero(Genero.MELODRAMA);
-		abb.AgregarGenero(Genero.TRAGEDIA);
-		abb.AgregarGenero(Genero.TRAGICOMEDIA);
-		
-		
-		Libro libro1 = new Libro(Genero.COMEDIA, "lol1", "Yami", 4.50);
-		Libro libro2 = new Libro(Genero.DRAMATICO, "drama1", "Juan", 5.00);
-		Libro libro3 = new Libro(Genero.DRAMATICO, "drama2", "Juan", 10.80);
-		Libro libro4 = new Libro(Genero.EPICO, "epic1", "Pedro", 20.50);
-		Libro libro5 = new Libro(Genero.EPICO, "epic2", "Pedro", 30.00);
-		Libro libro6= new Libro(Genero.EPICO, "epic3", "Pedro", 40.50);
-		Libro libro7 = new Libro(Genero.FARSA, "farsa1", "Vieiro", 0.50);
-		Libro libro8 = new Libro(Genero.FARSA, "farsa2", "Vieiro", 1.00);
-		Libro libro9 = new Libro(Genero.FARSA, "farsa3", "Vieiro", 2.50);
-		Libro libro10 = new Libro(Genero.FARSA, "farsa4", "Vieiro", 3.50);
-		Libro libro11 = new Libro(Genero.LIRICO, "lirico1", "Martin", 50.50);
-		Libro libro12 = new Libro(Genero.LIRICO, "lirico2", "Martin", 60.00);
-		Libro libro13 = new Libro(Genero.LIRICO, "lirico3", "Martin", 70.50);
-		Libro libro14 = new Libro(Genero.LIRICO, "lirico4", "Martin", 80.00);
-		Libro libro15 = new Libro(Genero.LIRICO, "lirico5", "Martin", 90.50);
-		Libro libro16 = new Libro(Genero.MELODRAMA, "melo1", "Miguel", 100.50);
-		Libro libro17 = new Libro(Genero.MELODRAMA, "melo2", "Miguel", 23.50);
-		Libro libro18 = new Libro(Genero.MELODRAMA, "melo3", "Miguel", 41.00);
-		Libro libro19 = new Libro(Genero.MELODRAMA, "melo4", "Miguel", 12.50);
-		Libro libro20 = new Libro(Genero.MELODRAMA, "melo5", "Miguel", 58.00);
-		Libro libro21 = new Libro(Genero.MELODRAMA, "melo6", "Miguel", 21.50);
-		Libro libro22 = new Libro(Genero.TRAGEDIA, "tragedia1", "jose", 11.50);
-		Libro libro23 = new Libro(Genero.TRAGEDIA, "tragedia2", "jose", 180.00);
-		Libro libro24 = new Libro(Genero.TRAGEDIA, "tragedia3", "jose", 200.50);
-		Libro libro25 = new Libro(Genero.TRAGEDIA, "tragedia4", "jose", 50.50);
-		Libro libro26 = new Libro(Genero.TRAGEDIA, "tragedia5", "jose", 150.50);
-		Libro libro27 = new Libro(Genero.TRAGEDIA, "tragedia6", "jose", 300.00);
-		Libro libro28 = new Libro(Genero.TRAGEDIA, "tragedia7", "jose", 110.50);
-		Libro libro29 = new Libro(Genero.TRAGICOMEDIA, "tragicom1", "Ernesto", 20.50);
-		Libro libro30 = new Libro(Genero.TRAGICOMEDIA, "tragicom2", "Ernesto", 900.00);
-		Libro libro31 = new Libro(Genero.TRAGICOMEDIA, "tragicom3", "Ernesto", 800.50);
-		Libro libro32 = new Libro(Genero.TRAGICOMEDIA, "tragicom4", "Ernesto", 600.50);
-		Libro libro33 = new Libro(Genero.TRAGICOMEDIA, "tragicom5", "Ernesto", 450.50);
-		Libro libro34 = new Libro(Genero.TRAGICOMEDIA, "tragicom6", "Ernesto", 320.00);
-		Libro libro35 = new Libro(Genero.TRAGICOMEDIA, "tragicom7", "Ernesto", 101.50);
-		Libro libro36 = new Libro(Genero.TRAGICOMEDIA, "tragicom8", "Ernesto", 320.00);
+		Libro libro1 = new Libro("Comedia", "lol1", "Yami", 4.50);
+		Libro libro2 = new Libro("Drama", "drama1", "Juan", 5.00);
+		Libro libro3 = new Libro("Drama", "drama2", "Juan", 10.80);
+		Libro libro4 = new Libro("Epico", "epic1", "Pedro", 20.50);
+		Libro libro5 = new Libro("Epico", "epic2", "Pedro", 30.00);
+		Libro libro6= new Libro("Epico", "epic3", "Pedro", 40.50);
+		Libro libro7 = new Libro("Farsa", "farsa1", "Vieiro", 0.50);
+		Libro libro8 = new Libro("Farsa", "farsa2", "Vieiro", 1.00);
+		Libro libro9 = new Libro("Farsa", "farsa3", "Vieiro", 2.50);
+		Libro libro10 = new Libro("Farsa", "farsa4", "Vieiro", 3.50);
+		Libro libro11 = new Libro("Lirico", "lirico1", "Martin", 50.50);
+		Libro libro12 = new Libro("Lirico", "lirico2", "Martin", 60.00);
+		Libro libro13 = new Libro("Lirico", "lirico3", "Martin", 70.50);
+		Libro libro14 = new Libro("Lirico", "lirico4", "Martin", 80.00);
+		Libro libro15 = new Libro("Lirico", "lirico5", "Martin", 90.50);
+		Libro libro16 = new Libro("Melodrama", "melo1", "Miguel", 100.50);
+		Libro libro17 = new Libro("Melodrama", "melo2", "Miguel", 23.50);
+		Libro libro18 = new Libro("Melodrama", "melo3", "Miguel", 41.00);
+		Libro libro19 = new Libro("Melodrama", "melo4", "Miguel", 12.50);
+		Libro libro20 = new Libro("Melodrama", "melo5", "Miguel", 58.00);
+		Libro libro21 = new Libro("Melodrama", "melo6", "Miguel", 21.50);
+		Libro libro22 = new Libro("Tragedia", "tragedia1", "jose", 11.50);
+		Libro libro23 = new Libro("Tragedia", "tragedia2", "jose", 180.00);
+		Libro libro24 = new Libro("Tragedia", "tragedia3", "jose", 200.50);
+		Libro libro25 = new Libro("Tragedia", "tragedia4", "jose", 50.50);
+		Libro libro26 = new Libro("Tragedia", "tragedia5", "jose", 150.50);
+		Libro libro27 = new Libro("Tragedia", "tragedia6", "jose", 300.00);
+		Libro libro28 = new Libro("Tragedia", "tragedia7", "jose", 110.50);
+
 		
 		abb.AgregarLibro(libro1);
 		abb.AgregarLibro(libro2);
@@ -238,17 +236,10 @@ public class PruebaLibros {
 		abb.AgregarLibro(libro26);
 		abb.AgregarLibro(libro27);
 		abb.AgregarLibro(libro28);
-		abb.AgregarLibro(libro29);
-		abb.AgregarLibro(libro30);
-		abb.AgregarLibro(libro31);
-		abb.AgregarLibro(libro32);
-		abb.AgregarLibro(libro33);
-		abb.AgregarLibro(libro34);
-		abb.AgregarLibro(libro35);
-		abb.AgregarLibro(libro36);
 		
+		Genero gene = new Genero("Comedia");
 		
-		ColaTDA colita = ObtenerLibrosSegunGenero(abb, Genero.COMEDIA);
+		ColaTDA colita = ObtenerLibrosSegunGenero(abb, gene);
 		
 		System.out.println("LIBROS SEGUN GENERO COMEDIA");
 		System.out.println();
@@ -263,9 +254,11 @@ public class PruebaLibros {
 		System.out.println("---------------------------------------");
 		System.out.println();
 		
-		colita = ObtenerLibrosSegunGenero(abb, Genero.TRAGICOMEDIA);
+		gene.setNombre("Tragedia");
 		
-		System.out.println("LIBROS SEGUN GENERO TRAGICOMEDIA");
+		colita = ObtenerLibrosSegunGenero(abb, gene);
+		
+		System.out.println("LIBROS SEGUN GENERO TRAGEDIA");
 		System.out.println();
 		
 		while(!colita.ColaVacia()){
