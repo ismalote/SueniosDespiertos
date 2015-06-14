@@ -10,6 +10,8 @@ public class Genero {
 	
 	public Genero(String nombre){
 		this.nombre=nombre;
+		libros = new Cola();
+		libros.InicializarCola();
 	}
 	
 	public String getNombre() {
@@ -24,8 +26,8 @@ public class Genero {
 		return libros;
 	}
 	
-	public void setLibros(ColaTDA libros) {
-		this.libros = libros;
+	public void addLibro(Libro libro) {
+		this.libros.Acolar(libro);
 	}
 	
 	public void borrarLibro(Libro libro){

@@ -31,6 +31,7 @@ public class ABBCatalogo implements ABBTDACatalogo{
 			if(raiz == null){
 				raiz = new Nodo();
 				raiz.genero = new Genero(libro.getGenero());
+				raiz.genero.getLibros().Acolar(libro);
 				raiz.hijoIzq = new ABBCatalogo();
 				raiz.hijoIzq.Inicializar();
 				raiz.hijoDer = new ABBCatalogo();
