@@ -1,6 +1,0 @@
-package enums;
-
-public enum Genero {
-	TRAGEDIA, COMEDIA, MELODRAMA, TRAGICOMEDIA, 
-	FARSA, EPICO, LIRICO, DRAMATICO;
-}

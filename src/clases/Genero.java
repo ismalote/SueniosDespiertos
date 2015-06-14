@@ -1,5 +1,6 @@
 package clases;
 
+import implementaciones.Cola;
 import tdas.ColaTDA;
 
 public class Genero {
@@ -7,9 +8,8 @@ public class Genero {
 	private String nombre;
 	private ColaTDA libros;
 	
-	public Genero(String nombre, ColaTDA libros){
+	public Genero(String nombre){
 		this.nombre=nombre;
-		this.libros=libros;
 	}
 	
 	public String getNombre() {
@@ -28,4 +28,21 @@ public class Genero {
 		this.libros = libros;
 	}
 	
+	public void borrarLibro(Libro libro){
+		ColaTDA aux = new Cola();
+		aux.InicializarCola();
+		
+		while(!libros.ColaVacia()){
+			if(libros.Primero().equals(libro)){
+				libros.Desacolar();
+			}else{
+				aux.Acolar(libros.Primero());
+				libros.Desacolar();
+			}
+		}
+		while(!aux.ColaVacia()){
+			libros.Acolar(aux.Primero());
+			aux.Desacolar();
+		}
+	}
 }
