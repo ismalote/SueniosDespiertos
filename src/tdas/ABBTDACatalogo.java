@@ -35,12 +35,11 @@ public interface ABBTDACatalogo {
 	 * Pos-condiciones: La estructura se ve modificada con un elemento en menos, si existe el género. */
 	public void EliminarGenero(Genero genero);
 	
-	/* Elimina uno o más libros de la estructura.
+	/* Elimina uno o más libros de la estructura. Si el género del libro no existe o el libro no existe en su género, no hace nada.
 	 * Si es el único libro, elimina también el género.
-	 * Pre-condiciones: La estructura tiene que estar inicializada y el género del libro debe existir.
+	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: La estructura se ve modificada, con tantas ocurrencias del libro existan, en menos, 
-	 * si tanto el género del libro como el libro existen. 
-	 * Si el género del libro no existe o el libro no existe en su género, no hace nada. */
+	 * si tanto el género del libro como el libro existen. */
 	public void EliminarLibro(Libro libro);
 	
 	/* Devuelve el Género que está en la raíz del catálogo o nulo si el árbol es nulo.
