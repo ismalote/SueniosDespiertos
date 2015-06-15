@@ -1,7 +1,5 @@
 package prueba;
 
-import java.util.List;
-
 import clases.Genero;
 import clases.Libro;
 import implementaciones.*;
@@ -41,9 +39,7 @@ public class PruebaLibros {
 		return cola;
 	}
 	
-	
 	public static DiccionarioMultipleTDA ObtenerLibrosPorPrecio(ABBTDACatalogo a, double price){
-		// TODO hay que revisar este metodo
 		
 		DiccionarioMultipleTDA dic = new DiccionarioMultiple();
 		dic.InicializarDiccionario();
@@ -61,28 +57,28 @@ public class PruebaLibros {
 			
 			while(!dicIzq.DiccionarioVacio()){
 				ConjuntoTDA conjGen = dicIzq.Claves();
-				Genero gen = (Genero) conjGen.Elegir();
-				ConjuntoTDA conjLib = dicIzq.Recuperar(gen);
+				String nombreGenero = (String)conjGen.Elegir();
+				ConjuntoTDA conjLib = dicIzq.Recuperar(nombreGenero);
 				while(!conjLib.ConjuntoVacio()){
 					Libro book = (Libro) conjLib.Elegir();
-					dic.Agregar(gen, book);
-					dicIzq.EliminarValor(gen, book);
+					dic.Agregar(nombreGenero, book);
+					dicIzq.EliminarValor(nombreGenero, book);
 					conjLib.Sacar(book);
 				}
-				conjGen.Sacar(gen);
+				conjGen.Sacar(nombreGenero);
 			}
 			
 			while(!dicDer.DiccionarioVacio()){
 				ConjuntoTDA conjGen = dicDer.Claves();
-				Genero gen = (Genero) conjGen.Elegir();
-				ConjuntoTDA conjLib = dicDer.Recuperar(gen);
+				String nombreGenero = (String)conjGen.Elegir();
+				ConjuntoTDA conjLib = dicDer.Recuperar(nombreGenero);
 				while(!conjLib.ConjuntoVacio()){
 					Libro book = (Libro) conjLib.Elegir();
-					dic.Agregar(gen, book);
-					dicDer.EliminarValor(gen, book);
+					dic.Agregar(nombreGenero, book);
+					dicDer.EliminarValor(nombreGenero, book);
 					conjLib.Sacar(book);
 				}
-				conjGen.Sacar(gen);
+				conjGen.Sacar(nombreGenero);
 			}
 		}
 		
@@ -122,31 +118,28 @@ public class PruebaLibros {
 	
 	
 	
-	public static Genero ObtenerGeneroPrincipal(ABBTDACatalogo a){
-		
-		// TODO hay que arreglar este metodo
-		
-		Genero generoPrincipal = null;
+	public static String ObtenerGeneroPrincipal(ABBTDACatalogo a){
+
+		String generoPrincipal = null;
 		int cantidadMayor = 0;
 		ConjuntoTDA claves = null;
 		
 		DiccionarioSimpleTDA dicc = new DiccionarioSimple();
 		dicc.InicializarDiccionario();
-				
-//		dicc.Agregar(Genero.TRAGEDIA, ObtenerCantidadLibros(a, Genero.TRAGEDIA));
-//		dicc.Agregar(Genero.COMEDIA, ObtenerCantidadLibros(a, Genero.COMEDIA));
-//		dicc.Agregar(Genero.MELODRAMA, ObtenerCantidadLibros(a, Genero.MELODRAMA));
-//		dicc.Agregar(Genero.TRAGICOMEDIA, ObtenerCantidadLibros(a, Genero.TRAGICOMEDIA));
-//		dicc.Agregar(Genero.FARSA, ObtenerCantidadLibros(a, Genero.FARSA));
-//		dicc.Agregar(Genero.EPICO, ObtenerCantidadLibros(a, Genero.EPICO));
-//		dicc.Agregar(Genero.LIRICO, ObtenerCantidadLibros(a, Genero.LIRICO));
-//		dicc.Agregar(Genero.DRAMATICO, ObtenerCantidadLibros(a, Genero.DRAMATICO));
+
+		ColaTDA generos = ObtenerGeneros(a);
+		
+		while (!generos.ColaVacia()) {
+			Genero gen = (Genero)generos.Primero();
+			dicc.Agregar(gen.getNombre(), ObtenerCantidadLibros(a, gen));
+			generos.Desacolar();
+		}
 		
 		claves = dicc.Claves();
 		
 		// Calculo la mayor cantidad, luego retorno el género con mayor cantidad de libros.
 		while (!claves.ConjuntoVacio()) {
-			Genero clave = (Genero)claves.Elegir();
+			String clave = (String)claves.Elegir();
 			int cantidad = (int)dicc.Recuperar(clave);
 			
 			if (cantidad > cantidadMayor) {
@@ -158,6 +151,29 @@ public class PruebaLibros {
 		}
 		
 		return generoPrincipal;
+	}
+	
+	private static ColaTDA ObtenerGeneros(ABBTDACatalogo a) {
+		ColaTDA generos = new Cola();
+		generos.InicializarCola();
+		
+		if (!a.ArbolVacio()) {
+			generos.Acolar(a.ObtenerGenero());
+			ColaTDA colaIzq = ObtenerGeneros(a.HijoIzq());
+			ColaTDA colaDer = ObtenerGeneros(a.HijoDer());
+		
+			while(!colaIzq.ColaVacia()){
+				generos.Acolar(colaIzq.Primero());
+				colaIzq.Desacolar();
+			}
+			
+			while(!colaDer.ColaVacia()){
+				generos.Acolar(colaDer.Primero());
+				colaDer.Desacolar();
+			}
+		}
+		
+		return generos;
 	}
 	
 	private static int ObtenerCantidadLibros(ABBTDACatalogo a, Genero gen) {
@@ -278,19 +294,20 @@ public class PruebaLibros {
 		
 		ConjuntoTDA conjClave;
 		
-		if(dicc.DiccionarioVacio()){
+		if(!dicc.DiccionarioVacio()){
 			conjClave = dicc.Claves();
 			while(!conjClave.ConjuntoVacio()){
-				Genero gen = (Genero) conjClave.Elegir();
-				System.out.println("Genero: " + gen);
+				String nombreGenero = (String)conjClave.Elegir();
 				System.out.println();
-				ConjuntoTDA conjLibro = dicc.Recuperar(gen);
+				System.out.println("Genero: " + nombreGenero);
+				System.out.println();
+				ConjuntoTDA conjLibro = dicc.Recuperar(nombreGenero);
 				while(!conjLibro.ConjuntoVacio()){
 					Libro book = (Libro) conjLibro.Elegir();
 					System.out.println(book.getTitulo());
 					conjLibro.Sacar(book);
 				}
-				conjLibro.Sacar(gen);
+				conjClave.Sacar(nombreGenero);
 			}
 		}
 		
@@ -301,9 +318,14 @@ public class PruebaLibros {
 		System.out.println("GÉNERO PRINCIPAL");
 		System.out.println();
 		
-		Genero genero = ObtenerGeneroPrincipal(abb);
+		String genero = ObtenerGeneroPrincipal(abb);
 		
-		System.out.println(genero.toString());
+		if (genero != null) {
+			System.out.println(genero);
+		} else {
+			System.out.println("No hay un género principal.");
+		}
+		
 	}
 
 }

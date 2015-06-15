@@ -23,7 +23,7 @@ public class Genero {
 	}
 	
 	public ColaTDA getLibros() {
-		return libros;
+		return this.CopiarColaLibros();
 	}
 	
 	public void addLibro(Libro libro) {
@@ -46,5 +46,23 @@ public class Genero {
 			libros.Acolar(aux.Primero());
 			aux.Desacolar();
 		}
+	}
+	
+	private ColaTDA CopiarColaLibros() {
+		ColaTDA colaAux = new Cola();
+		colaAux.InicializarCola();
+		
+		ColaTDA colaARetornar = new Cola();
+		colaARetornar.InicializarCola();
+		
+		while (!libros.ColaVacia()) {
+			colaARetornar.Acolar(libros.Primero());
+			colaAux.Acolar(libros.Primero());
+			libros.Desacolar();
+		}
+		
+		libros = colaAux;
+		
+		return colaARetornar;
 	}
 }

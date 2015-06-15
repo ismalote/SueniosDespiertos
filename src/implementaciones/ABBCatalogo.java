@@ -31,13 +31,13 @@ public class ABBCatalogo implements ABBTDACatalogo{
 			if(raiz == null){
 				raiz = new Nodo();
 				raiz.genero = new Genero(libro.getGenero());
-				raiz.genero.getLibros().Acolar(libro);
+				raiz.genero.addLibro(libro);
 				raiz.hijoIzq = new ABBCatalogo();
 				raiz.hijoIzq.Inicializar();
 				raiz.hijoDer = new ABBCatalogo();
 				raiz.hijoDer.Inicializar();
 			}else{
-				raiz.genero.getLibros().Acolar(libro);
+				raiz.genero.addLibro(libro);
 			}
 		}else if(raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
 			raiz.hijoDer.AgregarLibro(libro);
