@@ -32,16 +32,15 @@ public class Genero {
 	
 	public void borrarLibro(Libro libro){
 		ColaTDA aux = new Cola();
-		aux.InicializarCola();
+		aux.InicializarCola();	
 		
 		while(!libros.ColaVacia()){
-			if(libros.Primero().equals(libro)){
-				libros.Desacolar();
-			}else{
+			if(!libros.Primero().equals(libro)){
 				aux.Acolar(libros.Primero());
-				libros.Desacolar();
 			}
+			libros.Desacolar();
 		}
+		
 		while(!aux.ColaVacia()){
 			libros.Acolar(aux.Primero());
 			aux.Desacolar();

@@ -77,7 +77,7 @@ public class ABBCatalogo implements ABBTDACatalogo{
 		}else if(!raiz.hijoIzq.ArbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
 			raiz.hijoIzq.EliminarLibro(libro);
 		}else{
-			System.out.println("El libro no existe para ser eliminado");
+			System.out.println("El libro no existe para ser eliminado.");
 			return;
 		}
 		
