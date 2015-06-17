@@ -3,14 +3,14 @@ package tdas;
 import clases.Genero;
 import clases.Libro;
 
-/* Es una estructura que posee un conjunto de Géneros pertenecientes cada uno a un catálogo de libros.
- * Cada catálogo tiene asociado uno o más libros.
- * No pueden existir géneros duplicados.
- * A su vez, cada género puede contener libros duplicados. 
- * Ordena los géneros alfabéticamente a medida que se insertan ubicando 
- * los menores al género raíz, alfabéticamente, a la izquierda y 
- * los mayores al género ráiz, alfabéticamente, a la derecha, y 
- * así sucesivamente con cada género insertado. */
+/* Es una estructura que posee un conjunto de Gï¿½neros pertenecientes cada uno a un catï¿½logo de libros.
+ * Cada catï¿½logo tiene asociado uno o mï¿½s libros.
+ * No pueden existir gï¿½neros duplicados.
+ * A su vez, cada gï¿½nero puede contener libros duplicados. 
+ * Ordena los gï¿½neros alfabï¿½ticamente a medida que se insertan ubicando 
+ * los menores al gï¿½nero raï¿½z, alfabï¿½ticamente, a la izquierda y 
+ * los mayores al gï¿½nero rï¿½iz, alfabï¿½ticamente, a la derecha, y 
+ * asï¿½ sucesivamente con cada gï¿½nero insertado. */
 public interface ABBTDACatalogo {
 
 	/* Inicializa la estructura.
@@ -23,36 +23,36 @@ public interface ABBTDACatalogo {
 	 * Pos-condiciones: La estructura no se ve modificada. */
 	public boolean ArbolVacio();
 	
-	/* Agrega un libro a la estructura. Si el género del libro existe, se incorpora a ese género. 
-	 * Si el género no existe, se crea primero el género y luego se incorpora el libro.
+	/* Agrega un libro a la estructura. Si el gï¿½nero del libro existe, se incorpora a ese gï¿½nero. 
+	 * Si el gï¿½nero no existe, se crea primero el gï¿½nero y luego se incorpora el libro.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
-	 * Pos-condiciones: La estructura se ve modificada con un elemento en más. */
+	 * Pos-condiciones: La estructura se ve modificada con un elemento en mï¿½s. */
 	public void AgregarLibro(Libro libro);
 	
-	/* Elimina un género de la estructura y todos sus libros. 
-	 * Reacomoda los restantes géneros del catálogo.
+	/* Elimina un gï¿½nero de la estructura y todos sus libros. 
+	 * Reacomoda los restantes gï¿½neros del catï¿½logo.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
-	 * Pos-condiciones: La estructura se ve modificada con un elemento en menos, si existe el género. */
+	 * Pos-condiciones: La estructura se ve modificada con un elemento en menos, si existe el gï¿½nero. */
 	public void EliminarGenero(Genero genero);
 	
-	/* Elimina uno o más libros de la estructura. Si el género del libro no existe o el libro no existe en su género, no hace nada.
-	 * Si es el único libro, elimina también el género.
+	/* Elimina uno o mï¿½s libros de la estructura. Si el gï¿½nero del libro no existe o el libro no existe en su gï¿½nero, no hace nada.
+	 * Si es el ï¿½nico libro, elimina tambiï¿½n el gï¿½nero.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: La estructura se ve modificada, con tantas ocurrencias del libro existan, en menos, 
-	 * si tanto el género del libro como el libro existen. */
+	 * si tanto el gï¿½nero del libro como el libro existen. */
 	public void EliminarLibro(Libro libro);
 	
-	/* Devuelve el Género que está en la raíz del catálogo o nulo si el árbol es nulo.
+	/* Devuelve el Gï¿½nero que estï¿½ en la raï¿½z del catï¿½logo o nulo si el ï¿½rbol es nulo.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: No posee. */
 	public Genero ObtenerGenero();
 	
-	/* Devuelve el catálogo de libros asociado al género de la izquierda o nulo si no existe.
+	/* Devuelve el catï¿½logo de libros asociado al gï¿½nero cuyo nombre es alfabÃ©ticamente anterior al gÃ©nero raÃ­z, o nulo si no existe.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: No posee. */
 	public ABBTDACatalogo HijoIzq();
 	
-	/* Devuelve el catálogo de libros asociado al género de la derecha o nulo si no existe.
+	/* Devuelve el catï¿½logo de libros asociado al gï¿½nero cuyo nombre es alfabÃ©ticamente anterior al gÃ©nero raÃ­z, o nulo si no existe.
 	 * Pre-condiciones: La estructura tiene que estar inicializada.
 	 * Pos-condiciones: No posee. */
 	public ABBTDACatalogo HijoDer();
