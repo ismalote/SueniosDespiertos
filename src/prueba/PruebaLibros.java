@@ -289,7 +289,7 @@ public class PruebaLibros {
 		System.out.println("G�NERO PRINCIPAL");
 		System.out.println();
 		
-		String genero = ObtenerGeneroPrincipal(abb);
+		String genero = ObtenerGeneroPrincipal(abb); 
 		
 		if (genero != null) {
 			System.out.println(genero);
