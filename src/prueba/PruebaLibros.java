@@ -8,6 +8,7 @@ import tdas.*;
 public class PruebaLibros {
 	
 	public static ColaTDA ObtenerLibrosSegunGenero(ABBTDACatalogo a, Genero gen){
+		
 		ColaTDA cola = new Cola();
 		cola.InicializarCola();
 		
@@ -113,73 +114,43 @@ public class PruebaLibros {
 		}
 		
 		return cola;
-	}
-	
-	
-	
+	}	
 	
 	public static String ObtenerGeneroPrincipal(ABBTDACatalogo a){
 
 		String generoPrincipal = null;
 		int cantidadMayor = 0;
-		ConjuntoTDA claves = null;
 		
-		DiccionarioSimpleTDA dicc = new DiccionarioSimple();
-		dicc.InicializarDiccionario();
-
-		ColaTDA generos = ObtenerGeneros(a);
+		ColaTDA generos = new Cola();
+		generos.InicializarCola();		
+		ObtenerGeneros(a, generos);
 		
 		while (!generos.ColaVacia()) {
 			Genero gen = (Genero)generos.Primero();
-			dicc.Agregar(gen.getNombre(), ObtenerCantidadLibros(a, gen));
+			int cantidadActual = ObtenerCantidadLibros(gen);
+			if(cantidadActual > cantidadMayor){
+				cantidadMayor = cantidadActual;
+				generoPrincipal = gen.getNombre();
+			}
 			generos.Desacolar();
 		}
 		
-		claves = dicc.Claves();
+		return generoPrincipal; //Si hay mÃ¡s de un gÃ©nero con la misma cantidad de libros, devuelve el primero de ellos.
 		
-		// Calculo la mayor cantidad, luego retorno el género con mayor cantidad de libros.
-		while (!claves.ConjuntoVacio()) {
-			String clave = (String)claves.Elegir();
-			int cantidad = (int)dicc.Recuperar(clave);
-			
-			if (cantidad > cantidadMayor) {
-				cantidadMayor = cantidad;
-				generoPrincipal = clave;
-			}
-			
-			claves.Sacar(clave);
-		}
-		
-		return generoPrincipal;
 	}
 	
-	private static ColaTDA ObtenerGeneros(ABBTDACatalogo a) {
-		ColaTDA generos = new Cola();
-		generos.InicializarCola();
-		
-		if (!a.ArbolVacio()) {
+	private static void ObtenerGeneros(ABBTDACatalogo a, ColaTDA generos) {
+		if (!a.ArbolVacio()) {			
+			ObtenerGeneros(a.HijoIzq(), generos);
 			generos.Acolar(a.ObtenerGenero());
-			ColaTDA colaIzq = ObtenerGeneros(a.HijoIzq());
-			ColaTDA colaDer = ObtenerGeneros(a.HijoDer());
-		
-			while(!colaIzq.ColaVacia()){
-				generos.Acolar(colaIzq.Primero());
-				colaIzq.Desacolar();
-			}
-			
-			while(!colaDer.ColaVacia()){
-				generos.Acolar(colaDer.Primero());
-				colaDer.Desacolar();
-			}
+			ObtenerGeneros(a.HijoDer(), generos);		
 		}
-		
-		return generos;
 	}
 	
-	private static int ObtenerCantidadLibros(ABBTDACatalogo a, Genero gen) {
-		int cantidad = 0;
+	private static int ObtenerCantidadLibros(Genero gen) {
 		
-		ColaTDA cola = ObtenerLibrosSegunGenero(a, gen);
+		int cantidad = 0;		
+		ColaTDA cola = gen.getLibros();		
 		
 		while (!cola.ColaVacia()) {
 			cantidad++;
@@ -187,10 +158,11 @@ public class PruebaLibros {
 		}
 		
 		return cantidad;
+		
 	}
 	
-	
 	public static void main(String[] args) {
+		
 		ABBTDACatalogo abb = new ABBCatalogo();
 		abb.Inicializar();
 		
@@ -314,7 +286,7 @@ public class PruebaLibros {
 		System.out.println("---------------------------------------");
 		System.out.println();
 		
-		System.out.println("GÉNERO PRINCIPAL");
+		System.out.println("Gï¿½NERO PRINCIPAL");
 		System.out.println();
 		
 		String genero = ObtenerGeneroPrincipal(abb);
@@ -322,7 +294,7 @@ public class PruebaLibros {
 		if (genero != null) {
 			System.out.println(genero);
 		} else {
-			System.out.println("No hay un género principal.");
+			System.out.println("No hay un gï¿½nero principal.");
 		}
 		
 	}
