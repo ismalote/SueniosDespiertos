@@ -13,12 +13,12 @@ public class Cola implements ColaTDA{
 	NodoCola ultimo;
 
 	@Override
-	public void InicializarCola() {
+	public void inicializarCola() {
 		primero = null;
 	}
 
 	@Override
-	public void Acolar(Object o) {
+	public void acolar(Object o) {
 		NodoCola aux = new NodoCola();
 		aux.valor = o;
 		aux.sig = null;
@@ -32,7 +32,7 @@ public class Cola implements ColaTDA{
 	}
 
 	@Override
-	public void Desacolar() {
+	public void desacolar() {
 		primero = primero.sig;
 		
 		if(primero == null)
@@ -40,12 +40,12 @@ public class Cola implements ColaTDA{
 	}
 
 	@Override
-	public boolean ColaVacia() {
+	public boolean colaVacia() {
 		return (ultimo == null);
 	}
 
 	@Override
-	public Object Primero() {
+	public Object primero() {
 		return primero.valor;
 	}
 	

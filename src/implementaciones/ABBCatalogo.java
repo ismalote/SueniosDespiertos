@@ -15,67 +15,67 @@ public class ABBCatalogo implements ABBTDACatalogo{
 	Nodo raiz;
 	
 	@Override
-	public void Inicializar() {
+	public void inicializar() {
 		raiz=null;
 		
 	}
 
 	@Override
-	public boolean ArbolVacio() {
+	public boolean arbolVacio() {
 		return raiz==null;
 	}
 
 	@Override
-	public void AgregarLibro(Libro libro) {
+	public void agregarLibro(Libro libro) {
 		if(raiz==null || raiz.genero.getNombre().equals(libro.getGenero())){
 			if(raiz == null){
 				raiz = new Nodo();
 				raiz.genero = new Genero(libro.getGenero());
 				raiz.genero.addLibro(libro);
 				raiz.hijoIzq = new ABBCatalogo();
-				raiz.hijoIzq.Inicializar();
+				raiz.hijoIzq.inicializar();
 				raiz.hijoDer = new ABBCatalogo();
-				raiz.hijoDer.Inicializar();
+				raiz.hijoDer.inicializar();
 			}else{
 				raiz.genero.addLibro(libro);
 			}
 		}else if(raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
-			raiz.hijoDer.AgregarLibro(libro);
+			raiz.hijoDer.agregarLibro(libro);
 		}else if(raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
-			raiz.hijoIzq.AgregarLibro(libro);
+			raiz.hijoIzq.agregarLibro(libro);
 		}
 		
 	}
 
 	@Override
-	public void EliminarGenero(Genero genero) {
+	public void eliminarGenero(Genero genero) {
 		if(raiz != null){
-			if(raiz.genero.getNombre().equals(genero.getNombre()) && raiz.hijoDer.ArbolVacio() && raiz.hijoIzq.ArbolVacio()){
+			if(raiz.genero.getNombre().equals(genero.getNombre()) && raiz.hijoDer.arbolVacio() && raiz.hijoIzq.arbolVacio()){
 				raiz = null;
-			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoIzq.ArbolVacio()){
+			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoIzq.arbolVacio()){
 				raiz.genero = this.mayor(raiz.hijoIzq);
-				raiz.hijoIzq.EliminarGenero(raiz.genero);
-			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoDer.ArbolVacio()){
+				raiz.hijoIzq.eliminarGenero(raiz.genero);
+			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoDer.arbolVacio()){
 				raiz.genero = this.menor(raiz.hijoDer);
-				raiz.hijoDer.EliminarGenero(raiz.genero);
+				raiz.hijoDer.eliminarGenero(raiz.genero);
 			}else if (raiz.genero.getNombre().compareTo(genero.getNombre()) < 0){
-				raiz.hijoDer.EliminarGenero(genero);
+				raiz.hijoDer.eliminarGenero(genero);
 			}else{
-				raiz.hijoIzq.EliminarGenero(genero);
+				raiz.hijoIzq.eliminarGenero(genero);
 			}
 		}
 	}
 
 	@Override
-	public void EliminarLibro(Libro libro) {
+	public void eliminarLibro(Libro libro) {
 		if(raiz.genero.getNombre().equals(libro.getGenero())){
 			raiz.genero.borrarLibro(libro);
-			if(raiz.genero.getLibros().ColaVacia())
-				EliminarGenero(raiz.genero);
-		}else if(!raiz.hijoDer.ArbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
-			raiz.hijoDer.EliminarLibro(libro);
-		}else if(!raiz.hijoIzq.ArbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
-			raiz.hijoIzq.EliminarLibro(libro);
+			if(raiz.genero.getLibros().colaVacia())
+				eliminarGenero(raiz.genero);
+		}else if(!raiz.hijoDer.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
+			raiz.hijoDer.eliminarLibro(libro);
+		}else if(!raiz.hijoIzq.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
+			raiz.hijoIzq.eliminarLibro(libro);
 		}else{
 			System.out.println("El libro no existe para ser eliminado.");
 			return;
@@ -84,32 +84,32 @@ public class ABBCatalogo implements ABBTDACatalogo{
 	}
 
 	@Override
-	public Genero ObtenerGenero() {
+	public Genero obtenerGenero() {
 		return raiz.genero;
 	}
 
 	@Override
-	public ABBTDACatalogo HijoIzq() {
+	public ABBTDACatalogo hijoIzq() {
 		return raiz.hijoIzq;
 	}
 
 	@Override
-	public ABBTDACatalogo HijoDer() {
+	public ABBTDACatalogo hijoDer() {
 		return raiz.hijoDer;
 	}
 	
 	private Genero menor(ABBTDACatalogo a) {
-		if (a.HijoIzq().ArbolVacio())
-			return a.ObtenerGenero();
+		if (a.hijoIzq().arbolVacio())
+			return a.obtenerGenero();
 		else
-			return menor(a.HijoIzq());
+			return menor(a.hijoIzq());
 	}
 
 	private Genero mayor(ABBTDACatalogo a) {
-		if (a.HijoDer().ArbolVacio())
-			return a.ObtenerGenero();
+		if (a.hijoDer().arbolVacio())
+			return a.obtenerGenero();
 		else
-			return mayor(a.HijoDer());
+			return mayor(a.hijoDer());
 	}
 
 }

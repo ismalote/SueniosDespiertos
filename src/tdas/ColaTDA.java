@@ -2,13 +2,13 @@ package tdas;
 
 public interface ColaTDA {
 	
-	void InicializarCola();
+	void inicializarCola();
 	
-	void Acolar(Object o);
+	void acolar(Object o);
 	
-	void Desacolar();
+	void desacolar();
 	
-	boolean ColaVacia();
+	boolean colaVacia();
 	
-	Object Primero();
+	Object primero();
 }

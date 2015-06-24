@@ -20,12 +20,12 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	NodoDic priClave;
 
 	@Override
-	public void InicializarDiccionario() {
+	public void inicializarDiccionario() {
 		priClave = null;
 	}
 
 	@Override
-	public void Agregar(Object clave, Object valor) {
+	public void agregar(Object clave, Object valor) {
 		NodoDic aux = priClave;
 		
 		while(aux != null && !aux.clave.equals(clave)){
@@ -59,7 +59,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	}
 
 	@Override
-	public void Eliminar(Object clave) {
+	public void eliminar(Object clave) {
 		NodoDic aux = priClave;
 		
 		if(aux.clave.equals(clave)){
@@ -74,7 +74,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	}
 
 	@Override
-	public void EliminarValor(Object clave, Object valor) {
+	public void eliminarValor(Object clave, Object valor) {
 		NodoDic aux = priClave;
 		
 		while(!aux.clave.equals(clave)){
@@ -87,7 +87,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 			auxV = auxV.sig;
 			aux.valores = auxV;
 			if(aux.valores == null){
-				Eliminar(aux.clave);
+				eliminar(aux.clave);
 			}
 		}else{
 			while(!auxV.sig.valor.equals(valor)){
@@ -99,9 +99,9 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	}
 
 	@Override
-	public ConjuntoTDA Recuperar(Object clave) {
+	public ConjuntoTDA recuperar(Object clave) {
 		ConjuntoTDA conjunto = new Conjunto();
-		conjunto.InicializarConjunto();
+		conjunto.inicializarConjunto();
 		NodoDic aux = priClave;
 		
 		while(!aux.clave.equals(clave)){
@@ -110,7 +110,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 		
 		NodoV auxV = aux.valores;
 		while(auxV != null){
-			conjunto.Agregar(auxV.valor);
+			conjunto.agregar(auxV.valor);
 			auxV = auxV.sig;
 		}
 		
@@ -118,13 +118,13 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	}
 
 	@Override
-	public ConjuntoTDA Claves() {
+	public ConjuntoTDA claves() {
 		ConjuntoTDA conjunto = new Conjunto();
-		conjunto.InicializarConjunto();
+		conjunto.inicializarConjunto();
 		NodoDic aux = priClave;
 		
 		while(aux != null){
-			conjunto.Agregar(aux.clave);
+			conjunto.agregar(aux.clave);
 			aux = aux.sig;
 		}
 		
@@ -132,7 +132,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA{
 	}
 
 	@Override
-	public boolean DiccionarioVacio() {
+	public boolean diccionarioVacio() {
 		return (priClave == null);
 	}
 	

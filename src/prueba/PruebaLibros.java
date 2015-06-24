@@ -7,32 +7,32 @@ import tdas.*;
 
 public class PruebaLibros {
 	
-	public static ColaTDA ObtenerLibrosSegunGenero(ABBTDACatalogo a, Genero gen){
+	public static ColaTDA obtenerLibrosSegunGenero(ABBTDACatalogo a, Genero gen){
 		
 		ColaTDA cola = new Cola();
-		cola.InicializarCola();
+		cola.inicializarCola();
 		
-		if(!a.ArbolVacio()){
-			if(a.ObtenerGenero().getNombre().equals(gen.getNombre())){
-				ColaTDA aux = a.ObtenerGenero().getLibros();
-				while(!aux.ColaVacia()){
-					cola.Acolar(aux.Primero());
-					aux.Desacolar();
+		if(!a.arbolVacio()){
+			if(a.obtenerGenero().getNombre().equals(gen.getNombre())){
+				ColaTDA aux = a.obtenerGenero().getLibros();
+				while(!aux.colaVacia()){
+					cola.acolar(aux.primero());
+					aux.desacolar();
 				}
-			}else if(a.ObtenerGenero().getNombre().compareTo(gen.getNombre()) < 0){
-				ColaTDA colaDer = ObtenerLibrosSegunGenero(a.HijoDer(), gen);
+			}else if(a.obtenerGenero().getNombre().compareTo(gen.getNombre()) < 0){
+				ColaTDA colaDer = obtenerLibrosSegunGenero(a.hijoDer(), gen);
 				
-				while(!colaDer.ColaVacia()){
-					cola.Acolar(colaDer.Primero());
-					colaDer.Desacolar();
+				while(!colaDer.colaVacia()){
+					cola.acolar(colaDer.primero());
+					colaDer.desacolar();
 				}
 				
-			}else if(a.ObtenerGenero().getNombre().compareTo(gen.getNombre()) > 0){
-				ColaTDA colaIzq = ObtenerLibrosSegunGenero(a.HijoIzq(), gen);
+			}else if(a.obtenerGenero().getNombre().compareTo(gen.getNombre()) > 0){
+				ColaTDA colaIzq = obtenerLibrosSegunGenero(a.hijoIzq(), gen);
 				
-				while(!colaIzq.ColaVacia()){
-					cola.Acolar(colaIzq.Primero());
-					colaIzq.Desacolar();
+				while(!colaIzq.colaVacia()){
+					cola.acolar(colaIzq.primero());
+					colaIzq.desacolar();
 				}
 			}
 		}
@@ -40,121 +40,121 @@ public class PruebaLibros {
 		return cola;
 	}
 	
-	public static DiccionarioMultipleTDA ObtenerLibrosPorPrecio(ABBTDACatalogo a, double price){
+	public static DiccionarioMultipleTDA obtenerLibrosPorPrecio(ABBTDACatalogo a, double price){
 		
 		DiccionarioMultipleTDA dic = new DiccionarioMultiple();
-		dic.InicializarDiccionario();
+		dic.inicializarDiccionario();
 		
-		if(!a.ArbolVacio()){
-			ColaTDA books = a.ObtenerGenero().getLibros();
-			while(!books.ColaVacia()){
-				if(((Libro) books.Primero()).getPrecio() < price){
-					dic.Agregar(((Libro) books.Primero()).getGenero(), books.Primero());
+		if(!a.arbolVacio()){
+			ColaTDA books = a.obtenerGenero().getLibros();
+			while(!books.colaVacia()){
+				if(((Libro) books.primero()).getPrecio() < price){
+					dic.agregar(((Libro) books.primero()).getGenero(), books.primero());
 				}
-				books.Desacolar();
+				books.desacolar();
 			}
-			DiccionarioMultipleTDA dicIzq = ObtenerLibrosPorPrecio(a.HijoIzq(), price);
-			DiccionarioMultipleTDA dicDer = ObtenerLibrosPorPrecio(a.HijoDer(), price);
+			DiccionarioMultipleTDA dicIzq = obtenerLibrosPorPrecio(a.hijoIzq(), price);
+			DiccionarioMultipleTDA dicDer = obtenerLibrosPorPrecio(a.hijoDer(), price);
 			
-			while(!dicIzq.DiccionarioVacio()){
-				ConjuntoTDA conjGen = dicIzq.Claves();
-				String nombreGenero = (String)conjGen.Elegir();
-				ConjuntoTDA conjLib = dicIzq.Recuperar(nombreGenero);
-				while(!conjLib.ConjuntoVacio()){
-					Libro book = (Libro) conjLib.Elegir();
-					dic.Agregar(nombreGenero, book);
-					dicIzq.EliminarValor(nombreGenero, book);
-					conjLib.Sacar(book);
+			while(!dicIzq.diccionarioVacio()){
+				ConjuntoTDA conjGen = dicIzq.claves();
+				String nombreGenero = (String)conjGen.elegir();
+				ConjuntoTDA conjLib = dicIzq.recuperar(nombreGenero);
+				while(!conjLib.conjuntoVacio()){
+					Libro book = (Libro) conjLib.elegir();
+					dic.agregar(nombreGenero, book);
+					dicIzq.eliminarValor(nombreGenero, book);
+					conjLib.sacar(book);
 				}
-				conjGen.Sacar(nombreGenero);
+				conjGen.sacar(nombreGenero);
 			}
 			
-			while(!dicDer.DiccionarioVacio()){
-				ConjuntoTDA conjGen = dicDer.Claves();
-				String nombreGenero = (String)conjGen.Elegir();
-				ConjuntoTDA conjLib = dicDer.Recuperar(nombreGenero);
-				while(!conjLib.ConjuntoVacio()){
-					Libro book = (Libro) conjLib.Elegir();
-					dic.Agregar(nombreGenero, book);
-					dicDer.EliminarValor(nombreGenero, book);
-					conjLib.Sacar(book);
+			while(!dicDer.diccionarioVacio()){
+				ConjuntoTDA conjGen = dicDer.claves();
+				String nombreGenero = (String)conjGen.elegir();
+				ConjuntoTDA conjLib = dicDer.recuperar(nombreGenero);
+				while(!conjLib.conjuntoVacio()){
+					Libro book = (Libro) conjLib.elegir();
+					dic.agregar(nombreGenero, book);
+					dicDer.eliminarValor(nombreGenero, book);
+					conjLib.sacar(book);
 				}
-				conjGen.Sacar(nombreGenero);
+				conjGen.sacar(nombreGenero);
 			}
 		}
 		
 		return dic;
 	}
 	
-	public ColaTDA ObtenerLibrosSegunAutor(ABBTDACatalogo a, String autor){
+	public ColaTDA obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor){
 		ColaTDA cola = new Cola();
-		cola.InicializarCola();
+		cola.inicializarCola();
 		
-		if(!a.ArbolVacio()){
-			ColaTDA books = a.ObtenerGenero().getLibros();
-			while(!books.ColaVacia()){
-				if(((Libro) books.Primero()).getAutor().equals(autor)){
-					cola.Acolar(books.Primero());
+		if(!a.arbolVacio()){
+			ColaTDA books = a.obtenerGenero().getLibros();
+			while(!books.colaVacia()){
+				if(((Libro) books.primero()).getAutor().equals(autor)){
+					cola.acolar(books.primero());
 				}
-				books.Desacolar();
+				books.desacolar();
 			}
 			
-			ColaTDA colaIzq = ObtenerLibrosSegunAutor(a.HijoIzq(), autor);
-			ColaTDA colaDer = ObtenerLibrosSegunAutor(a.HijoDer(), autor);
+			ColaTDA colaIzq = obtenerLibrosSegunAutor(a.hijoIzq(), autor);
+			ColaTDA colaDer = obtenerLibrosSegunAutor(a.hijoDer(), autor);
 			
-			while(!colaIzq.ColaVacia()){
-				cola.Acolar(colaIzq.Primero());
-				colaIzq.Desacolar();
+			while(!colaIzq.colaVacia()){
+				cola.acolar(colaIzq.primero());
+				colaIzq.desacolar();
 			}
 			
-			while(!colaDer.ColaVacia()){
-				cola.Acolar(colaDer.Primero());
-				colaDer.Desacolar();
+			while(!colaDer.colaVacia()){
+				cola.acolar(colaDer.primero());
+				colaDer.desacolar();
 			}
 		}
 		
 		return cola;
 	}	
 	
-	public static String ObtenerGeneroPrincipal(ABBTDACatalogo a){
+	public static String obtenerGeneroPrincipal(ABBTDACatalogo a){
 
 		String generoPrincipal = null;
 		int cantidadMayor = 0;
 		
 		ColaTDA generos = new Cola();
-		generos.InicializarCola();		
-		ObtenerGeneros(a, generos);
+		generos.inicializarCola();		
+		obtenerGeneros(a, generos);
 		
-		while (!generos.ColaVacia()) {
-			Genero gen = (Genero)generos.Primero();
-			int cantidadActual = ObtenerCantidadLibros(gen);
+		while (!generos.colaVacia()) {
+			Genero gen = (Genero)generos.primero();
+			int cantidadActual = obtenerCantidadLibros(gen);
 			if(cantidadActual > cantidadMayor){
 				cantidadMayor = cantidadActual;
 				generoPrincipal = gen.getNombre();
 			}
-			generos.Desacolar();
+			generos.desacolar();
 		}
 		
 		return generoPrincipal; //Si hay más de un género con la misma cantidad de libros, devuelve el primero de ellos.
 		
 	}
 	
-	private static void ObtenerGeneros(ABBTDACatalogo a, ColaTDA generos) {
-		if (!a.ArbolVacio()) {			
-			ObtenerGeneros(a.HijoIzq(), generos);
-			generos.Acolar(a.ObtenerGenero());
-			ObtenerGeneros(a.HijoDer(), generos);		
+	private static void obtenerGeneros(ABBTDACatalogo a, ColaTDA generos) {
+		if (!a.arbolVacio()) {			
+			obtenerGeneros(a.hijoIzq(), generos);
+			generos.acolar(a.obtenerGenero());
+			obtenerGeneros(a.hijoDer(), generos);		
 		}
 	}
 	
-	private static int ObtenerCantidadLibros(Genero gen) {
+	private static int obtenerCantidadLibros(Genero gen) {
 		
 		int cantidad = 0;		
 		ColaTDA cola = gen.getLibros();		
 		
-		while (!cola.ColaVacia()) {
+		while (!cola.colaVacia()) {
 			cantidad++;
-			cola.Desacolar();
+			cola.desacolar();
 		}
 		
 		return cantidad;
@@ -164,7 +164,7 @@ public class PruebaLibros {
 	public static void main(String[] args) {
 		
 		ABBTDACatalogo abb = new ABBCatalogo();
-		abb.Inicializar();
+		abb.inicializar();
 		
 		Libro libro1 = new Libro("Comedia", "lol1", "Yami", 4.50);
 		Libro libro2 = new Libro("Drama", "drama1", "Juan", 5.00);
@@ -195,46 +195,46 @@ public class PruebaLibros {
 		Libro libro27 = new Libro("Tragedia", "tragedia5", "jose", 300.00);
 		Libro libro28 = new Libro("Tragedia", "tragedia6", "jose", 110.50);
 		
-		abb.AgregarLibro(libro11);
-		abb.AgregarLibro(libro22);
-		abb.AgregarLibro(libro3);
-		abb.AgregarLibro(libro4);
-		abb.AgregarLibro(libro25);
-		abb.AgregarLibro(libro6);
-		abb.AgregarLibro(libro7);
-		abb.AgregarLibro(libro8);
-		abb.AgregarLibro(libro1);
-		abb.AgregarLibro(libro10);
-		abb.AgregarLibro(libro9);
-		abb.AgregarLibro(libro12);
-		abb.AgregarLibro(libro13);
-		abb.AgregarLibro(libro14);
-		abb.AgregarLibro(libro15);
-		abb.AgregarLibro(libro16);
-		abb.AgregarLibro(libro17);
-		abb.AgregarLibro(libro18);
-		abb.AgregarLibro(libro19);
-		abb.AgregarLibro(libro20);
-		abb.AgregarLibro(libro21);
-		abb.AgregarLibro(libro2);
-		abb.AgregarLibro(libro23);
-		abb.AgregarLibro(libro24);
-		abb.AgregarLibro(libro5);
-		abb.AgregarLibro(libro26);
-		abb.AgregarLibro(libro27);
-		abb.AgregarLibro(libro28);
+		abb.agregarLibro(libro11);
+		abb.agregarLibro(libro22);
+		abb.agregarLibro(libro3);
+		abb.agregarLibro(libro4);
+		abb.agregarLibro(libro25);
+		abb.agregarLibro(libro6);
+		abb.agregarLibro(libro7);
+		abb.agregarLibro(libro8);
+		abb.agregarLibro(libro1);
+		abb.agregarLibro(libro10);
+		abb.agregarLibro(libro9);
+		abb.agregarLibro(libro12);
+		abb.agregarLibro(libro13);
+		abb.agregarLibro(libro14);
+		abb.agregarLibro(libro15);
+		abb.agregarLibro(libro16);
+		abb.agregarLibro(libro17);
+		abb.agregarLibro(libro18);
+		abb.agregarLibro(libro19);
+		abb.agregarLibro(libro20);
+		abb.agregarLibro(libro21);
+		abb.agregarLibro(libro2);
+		abb.agregarLibro(libro23);
+		abb.agregarLibro(libro24);
+		abb.agregarLibro(libro5);
+		abb.agregarLibro(libro26);
+		abb.agregarLibro(libro27);
+		abb.agregarLibro(libro28);
 		
 		Genero gene = new Genero("Comedia");
 		
-		ColaTDA colita = ObtenerLibrosSegunGenero(abb, gene);
+		ColaTDA colita = obtenerLibrosSegunGenero(abb, gene);
 		
 		System.out.println("LIBROS SEGUN GENERO COMEDIA");
 		System.out.println();
 		
-		while(!colita.ColaVacia()){
-			Libro book = (Libro) colita.Primero();
+		while(!colita.colaVacia()){
+			Libro book = (Libro) colita.primero();
 			System.out.println("Libro: " + book.getTitulo());
-			colita.Desacolar();
+			colita.desacolar();
 		}
 		
 		System.out.println();
@@ -243,15 +243,15 @@ public class PruebaLibros {
 		
 		gene.setNombre("Tragedia");
 		
-		colita = ObtenerLibrosSegunGenero(abb, gene);
+		colita = obtenerLibrosSegunGenero(abb, gene);
 		
 		System.out.println("LIBROS SEGUN GENERO TRAGEDIA");
 		System.out.println();
 		
-		while(!colita.ColaVacia()){
-			Libro book = (Libro) colita.Primero();
+		while(!colita.colaVacia()){
+			Libro book = (Libro) colita.primero();
 			System.out.println("Libro: " + book.getTitulo());
-			colita.Desacolar();
+			colita.desacolar();
 		}
 		
 		System.out.println();
@@ -261,24 +261,24 @@ public class PruebaLibros {
 		System.out.println("LIBROS CON PRECIO MENOR A $20");
 		System.out.println();
 		
-		DiccionarioMultipleTDA dicc = ObtenerLibrosPorPrecio(abb, 20);
+		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, 20);
 		
 		ConjuntoTDA conjClave;
 		
-		if(!dicc.DiccionarioVacio()){
-			conjClave = dicc.Claves();
-			while(!conjClave.ConjuntoVacio()){
-				String nombreGenero = (String)conjClave.Elegir();
+		if(!dicc.diccionarioVacio()){
+			conjClave = dicc.claves();
+			while(!conjClave.conjuntoVacio()){
+				String nombreGenero = (String)conjClave.elegir();
 				System.out.println();
 				System.out.println("Genero: " + nombreGenero);
 				System.out.println();
-				ConjuntoTDA conjLibro = dicc.Recuperar(nombreGenero);
-				while(!conjLibro.ConjuntoVacio()){
-					Libro book = (Libro) conjLibro.Elegir();
+				ConjuntoTDA conjLibro = dicc.recuperar(nombreGenero);
+				while(!conjLibro.conjuntoVacio()){
+					Libro book = (Libro) conjLibro.elegir();
 					System.out.println(book.getTitulo());
-					conjLibro.Sacar(book);
+					conjLibro.sacar(book);
 				}
-				conjClave.Sacar(nombreGenero);
+				conjClave.sacar(nombreGenero);
 			}
 		}
 		
@@ -289,7 +289,7 @@ public class PruebaLibros {
 		System.out.println("G�NERO PRINCIPAL");
 		System.out.println();
 		
-		String genero = ObtenerGeneroPrincipal(abb); 
+		String genero = obtenerGeneroPrincipal(abb); 
 		
 		if (genero != null) {
 			System.out.println(genero);

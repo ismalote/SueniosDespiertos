@@ -12,18 +12,18 @@ public class Conjunto implements ConjuntoTDA{
 	NodoConj c;
 	
 	@Override
-	public void InicializarConjunto() {
+	public void inicializarConjunto() {
 		c = null;
 	}
 
 	@Override
-	public boolean ConjuntoVacio() {
+	public boolean conjuntoVacio() {
 		return (c == null);
 	}
 
 	@Override
-	public void Agregar(Object o) {
-		if(!this.Pertenece(o)){
+	public void agregar(Object o) {
+		if(!this.pertenece(o)){
 			NodoConj aux = new NodoConj();
 			aux.valor = o;
 			aux.sig = c;
@@ -32,12 +32,12 @@ public class Conjunto implements ConjuntoTDA{
 	}
 
 	@Override
-	public Object Elegir() {
+	public Object elegir() {
 		return c.valor;
 	}
 
 	@Override
-	public void Sacar(Object o) {
+	public void sacar(Object o) {
 		if(c != null){
 			if(c.valor.equals(o)){
 				c = c.sig;
@@ -53,7 +53,7 @@ public class Conjunto implements ConjuntoTDA{
 	}
 
 	@Override
-	public boolean Pertenece(Object o) {
+	public boolean pertenece(Object o) {
 		NodoConj aux = c;
 		while((aux != null) && (!aux.valor.equals(o))){
 			aux = aux.sig;

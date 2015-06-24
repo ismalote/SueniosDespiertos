@@ -2,15 +2,15 @@ package tdas;
 
 public interface ConjuntoTDA {
 	
-	void InicializarConjunto();
+	void inicializarConjunto();
 	
-	boolean ConjuntoVacio();
+	boolean conjuntoVacio();
 	
-	void Agregar(Object o);
+	void agregar(Object o);
 	
-	Object Elegir();
+	Object elegir();
 	
-	void Sacar(Object o);
+	void sacar(Object o);
 	
-	boolean Pertenece(Object o);
+	boolean pertenece(Object o);
 }

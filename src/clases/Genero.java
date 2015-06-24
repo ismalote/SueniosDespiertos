@@ -11,7 +11,7 @@ public class Genero {
 	public Genero(String nombre){
 		this.nombre=nombre;
 		libros = new Cola();
-		libros.InicializarCola();
+		libros.inicializarCola();
 	}
 	
 	public String getNombre() {
@@ -23,41 +23,41 @@ public class Genero {
 	}
 	
 	public ColaTDA getLibros() {
-		return this.CopiarColaLibros();
+		return this.copiarColaLibros();
 	}
 	
 	public void addLibro(Libro libro) {
-		this.libros.Acolar(libro);
+		this.libros.acolar(libro);
 	}
 	
 	public void borrarLibro(Libro libro){
 		ColaTDA aux = new Cola();
-		aux.InicializarCola();	
+		aux.inicializarCola();	
 		
-		while(!libros.ColaVacia()){
-			if(!libros.Primero().equals(libro)){
-				aux.Acolar(libros.Primero());
+		while(!libros.colaVacia()){
+			if(!libros.primero().equals(libro)){
+				aux.acolar(libros.primero());
 			}
-			libros.Desacolar();
+			libros.desacolar();
 		}
 		
-		while(!aux.ColaVacia()){
-			libros.Acolar(aux.Primero());
-			aux.Desacolar();
+		while(!aux.colaVacia()){
+			libros.acolar(aux.primero());
+			aux.desacolar();
 		}
 	}
 	
-	private ColaTDA CopiarColaLibros() {
+	private ColaTDA copiarColaLibros() {
 		ColaTDA colaAux = new Cola();
-		colaAux.InicializarCola();
+		colaAux.inicializarCola();
 		
 		ColaTDA colaARetornar = new Cola();
-		colaARetornar.InicializarCola();
+		colaARetornar.inicializarCola();
 		
-		while (!libros.ColaVacia()) {
-			colaARetornar.Acolar(libros.Primero());
-			colaAux.Acolar(libros.Primero());
-			libros.Desacolar();
+		while (!libros.colaVacia()) {
+			colaARetornar.acolar(libros.primero());
+			colaAux.acolar(libros.primero());
+			libros.desacolar();
 		}
 		
 		libros = colaAux;

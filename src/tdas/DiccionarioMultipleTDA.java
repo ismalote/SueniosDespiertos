@@ -2,17 +2,17 @@ package tdas;
 
 public interface DiccionarioMultipleTDA {
 	
-	void InicializarDiccionario();
+	void inicializarDiccionario();
 	
-	void Agregar(Object clave, Object valor);
+	void agregar(Object clave, Object valor);
 	
-	void Eliminar(Object clave);
+	void eliminar(Object clave);
 	
-	void EliminarValor(Object clave, Object valor);
+	void eliminarValor(Object clave, Object valor);
 	
-	ConjuntoTDA Recuperar(Object clave);
+	ConjuntoTDA recuperar(Object clave);
 	
-	ConjuntoTDA Claves();
+	ConjuntoTDA claves();
 	
-	boolean DiccionarioVacio();
+	boolean diccionarioVacio();
 }
