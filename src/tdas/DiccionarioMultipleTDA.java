@@ -3,7 +3,7 @@ package tdas;
 import TDA.ConjuntoTDA;
 import clases.Libro;
 
-/* Es una estructura que posee un conjunto de géneros, y cada una de ellos posee asociado un conjunto de libros. Los géneros son únicos. */
+/* Es una estructura que posee un conjunto de nombres de géneros, y cada una de ellos posee asociado un conjunto de libros. Los nombres de géneros son únicos. */
 public interface DiccionarioMultipleTDA {
 
 	/* Inicializa el diccionario. 
