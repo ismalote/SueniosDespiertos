@@ -1,18 +1,18 @@
 package prueba;
 
 import implementaciones.ABBCatalogo;
-import implementaciones.Cola;
 import implementaciones.DiccionarioMultiple;
 import tdas.ABBTDACatalogo;
-import tdas.ColaTDA;
-import tdas.ConjuntoTDA;
 import tdas.DiccionarioMultipleTDA;
+import Implementaciones.Cola;
+import TDA.ColaTDA;
+import TDA.ConjuntoTDA;
 import clases.Genero;
 import clases.Libro;
 
 public class PruebaLibros {
 
-	public static ColaTDA obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen) {
+	public static ColaTDA<Libro> obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen) {
 
 		Genero genero = buscarGenero(a, strGen);
 		if (genero != null) {
@@ -29,7 +29,7 @@ public class PruebaLibros {
 		/**
 		 * Obtenemos los generos en una cola para facilitar el recorrido
 		 */
-		ColaTDA generos = new Cola();
+		ColaTDA<Genero> generos = new Cola<Genero>();
 		generos.inicializarCola();
 		obtenerGeneros(a, generos);
 
@@ -42,7 +42,7 @@ public class PruebaLibros {
 			/**
 			 * Iteramos sobre los libros del genero
 			 */
-			ColaTDA libros = generoActual.getLibros();
+			ColaTDA<Libro> libros = generoActual.getLibros();
 			while (!libros.colaVacia()) {
 				Libro libroActual = (Libro) libros.primero();
 
@@ -60,8 +60,8 @@ public class PruebaLibros {
 		return dic;
 	}
 
-	public static ColaTDA obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
-		ColaTDA cola = new Cola();
+	public static ColaTDA<Libro> obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
+		ColaTDA<Libro> cola = new Cola<Libro>();
 		cola.inicializarCola();
 
 		if (autor != null && !autor.isEmpty()) {
@@ -69,7 +69,7 @@ public class PruebaLibros {
 			/**
 			 * Obtenemos los generos en una cola para facilitar el recorrido
 			 */
-			ColaTDA generos = new Cola();
+			ColaTDA<Genero> generos = new Cola<Genero>();
 			generos.inicializarCola();
 			obtenerGeneros(a, generos);
 
@@ -82,7 +82,7 @@ public class PruebaLibros {
 				/**
 				 * Iteramos sobre los libros del genero
 				 */
-				ColaTDA libros = generoActual.getLibros();
+				ColaTDA<Libro> libros = generoActual.getLibros();
 				while (!libros.colaVacia()) {
 					Libro libroActual = (Libro) libros.primero();
 
@@ -115,7 +115,7 @@ public class PruebaLibros {
 		/**
 		 * Obtenemos los generos en una cola para facilitar el recorrido
 		 */
-		ColaTDA generos = new Cola();
+		ColaTDA<Genero> generos = new Cola<Genero>();
 		generos.inicializarCola();
 		obtenerGeneros(arbol, generos);
 
@@ -174,7 +174,7 @@ public class PruebaLibros {
 	 * @param a
 	 * @param generos
 	 */
-	private static void obtenerGeneros(ABBTDACatalogo a, ColaTDA generos) {
+	private static void obtenerGeneros(ABBTDACatalogo a, ColaTDA<Genero> generos) {
 		if (!a.arbolVacio()) {
 			obtenerGeneros(a.hijoIzq(), generos);
 			generos.acolar(a.obtenerGenero());
@@ -191,7 +191,7 @@ public class PruebaLibros {
 	private static int obtenerCantidadLibros(Genero gen) {
 
 		int cantidad = 0;
-		ColaTDA cola = gen.getLibros();
+		ColaTDA<Libro> cola = gen.getLibros();
 
 		while (!cola.colaVacia()) {
 			cantidad++;
@@ -267,15 +267,15 @@ public class PruebaLibros {
 
 		Genero gene = new Genero("Comedia");
 
-		ColaTDA colita = obtenerLibrosSegunGenero(abb, gene.getNombre());
+		ColaTDA<Libro> librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
 		System.out.println("LIBROS SEGUN GENERO COMEDIA");
 		System.out.println();
 
-		while (!colita.colaVacia()) {
-			Libro book = (Libro) colita.primero();
+		while (!librosSegunGenero.colaVacia()) {
+			Libro book = (Libro) librosSegunGenero.primero();
 			System.out.println("Libro: " + book.getTitulo());
-			colita.desacolar();
+			librosSegunGenero.desacolar();
 		}
 
 		System.out.println();
@@ -284,15 +284,15 @@ public class PruebaLibros {
 
 		gene.setNombre("Tragedia");
 
-		colita = obtenerLibrosSegunGenero(abb, gene.getNombre());
+		librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
 		System.out.println("LIBROS SEGUN GENERO TRAGEDIA");
 		System.out.println();
 
-		while (!colita.colaVacia()) {
-			Libro book = (Libro) colita.primero();
+		while (!librosSegunGenero.colaVacia()) {
+			Libro book = (Libro) librosSegunGenero.primero();
 			System.out.println("Libro: " + book.getTitulo());
-			colita.desacolar();
+			librosSegunGenero.desacolar();
 		}
 
 		System.out.println();
@@ -303,7 +303,7 @@ public class PruebaLibros {
 		System.out.println();
 
 		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, 20);
-		ConjuntoTDA conjClave;
+		ConjuntoTDA<String> conjClave;
 
 		if (!dicc.diccionarioVacio()) {
 			conjClave = dicc.claves();
@@ -312,7 +312,7 @@ public class PruebaLibros {
 				System.out.println();
 				System.out.println("Genero: " + nombreGenero);
 				System.out.println();
-				ConjuntoTDA conjLibro = dicc.recuperar(nombreGenero);
+				ConjuntoTDA<Libro> conjLibro = dicc.recuperar(nombreGenero);
 				while (!conjLibro.conjuntoVacio()) {
 					Libro book = (Libro) conjLibro.elegir();
 					System.out.println(book.getTitulo());
@@ -342,7 +342,7 @@ public class PruebaLibros {
 		System.out.println();
 
 		System.out.println("LIBROS DE JUAN");
-		ColaTDA librosObtenidos = obtenerLibrosSegunAutor(abb, "juan");
+		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, "juan");
 
 		while (!librosObtenidos.colaVacia()) {
 			Libro book = (Libro) librosObtenidos.primero();
