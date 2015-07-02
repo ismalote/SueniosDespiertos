@@ -34,7 +34,6 @@ public interface DiccionarioMultipleTDA {
 	/* Devuelve un conjunto con todas los nombres de géneros definidos en el diccionario. 
 	 * Pre-condiciones: la estructura debe estar inicializada. 
 	 * Pos-condiciones: la estructura no se ve modificada. */
-
 	ConjuntoTDA<String> claves();
 
 	/* Verifica si el diccionario posee o no nombres de géneros (true: vacío; false: no vacío). 
