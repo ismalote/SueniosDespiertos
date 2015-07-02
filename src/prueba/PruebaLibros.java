@@ -207,10 +207,12 @@ public class PruebaLibros {
 		ABBTDACatalogo abb = new ABBCatalogo();
 		abb.inicializar();
 
+		//Creamos cada libro que serán cargados en el catálogo
+		
 		Libro libro1 = new Libro("Comedia", "Chistes y Anecdotas", "Maria", 4.50);
 		Libro libro2 = new Libro("Drama", "Drama Volumen 1", "Juan", 5.00);
 		Libro libro3 = new Libro("Drama", "Drama Volumen 2", "Juan", 10.80);
-		Libro libro4 = new Libro("Epico", "Esfuerzo o heroísmo", "Pedro", 20.50);
+		Libro libro4 = new Libro("Epico", "Esfuerzo o heroismo", "Pedro", 20.50);
 		Libro libro5 = new Libro("Epico", "Corazon", "Pedro", 30.00);
 		Libro libro6 = new Libro("Epico", "Para la historia", "Pedro", 40.50);
 		Libro libro7 = new Libro("Farsa", "Farsa 10", "Gomez", 10.50);
@@ -228,14 +230,16 @@ public class PruebaLibros {
 		Libro libro19 = new Libro("Arte", "Historia del arte", "Pedro", 12.50);
 		Libro libro20 = new Libro("Melodrama", "Melodrama, la continuacion", "Miguel", 58.00);
 		Libro libro21 = new Libro("Melodrama", "Melodrama, ultima etapa", "Maximo", 21.50);
-		Libro libro22 = new Libro("Tragedia", "Tragedy part 1", "jose", 11.50);
-		Libro libro23 = new Libro("Tragedia", "Tragedy part 2", "jose", 180.00);
+		Libro libro22 = new Libro("Tragedia", "Tragedy part 1", "Jose", 11.50);
+		Libro libro23 = new Libro("Tragedia", "Tragedy part 2", "Jose", 180.00);
 		Libro libro24 = new Libro("Arte", "Arte rupestre", "Hernan", 200.50);
-		Libro libro25 = new Libro("Tragedia", "Tragedia Importante", "jose", 50.50);
-		Libro libro26 = new Libro("Tragedia", "Tragedia Historica", "jose", 150.50);
-		Libro libro27 = new Libro("Tragedia", "Tragedia Volumen 1", "jose", 300.00);
-		Libro libro28 = new Libro("Tragedia", "Tragedia Volumen 2", "jose", 110.50);
+		Libro libro25 = new Libro("Tragedia", "Tragedia Importante", "Jose", 50.50);
+		Libro libro26 = new Libro("Tragedia", "Tragedia Historica", "Jose", 150.50);
+		Libro libro27 = new Libro("Tragedia", "Tragedia Volumen 1", "Jose", 300.00);
+		Libro libro28 = new Libro("Tragedia", "Tragedia Volumen 2", "Jose", 110.50);
 
+		//Cargamos los libros al Catálogo, que se ordenarán de acuerdo a su género.
+		
 		abb.agregarLibro(libro11);
 		abb.agregarLibro(libro22);
 		abb.agregarLibro(libro3);
@@ -265,43 +269,61 @@ public class PruebaLibros {
 		abb.agregarLibro(libro27);
 		abb.agregarLibro(libro28);
 
-		Genero gene = new Genero("Comedia");
+		//Obtenemos los libros que corresponden a un género determinado utilizando obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen)
+		
+		String generoBuscado = "Comedia";
+		
+		Genero gene = new Genero(generoBuscado);
 
 		ColaTDA<Libro> librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
-		System.out.println("LIBROS SEGUN GENERO COMEDIA");
+		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
 		System.out.println();
 
-		while (!librosSegunGenero.colaVacia()) {
-			Libro book = (Libro) librosSegunGenero.primero();
-			System.out.println("Libro: " + book.getTitulo());
-			librosSegunGenero.desacolar();
+		if(librosSegunGenero == null){
+			System.out.println("No existen libros del género ingresado.");
+		} else {		
+			while (!librosSegunGenero.colaVacia()) {
+				Libro book = (Libro) librosSegunGenero.primero();
+				System.out.println("- " + book.getTitulo());
+				librosSegunGenero.desacolar();
+			}			
 		}
 
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
 
-		gene.setNombre("Tragedia");
+		generoBuscado = "Tragedia";
+		
+		gene.setNombre(generoBuscado);
 
 		librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
-		System.out.println("LIBROS SEGUN GENERO TRAGEDIA");
+		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
 		System.out.println();
 
-		while (!librosSegunGenero.colaVacia()) {
-			Libro book = (Libro) librosSegunGenero.primero();
-			System.out.println("Libro: " + book.getTitulo());
-			librosSegunGenero.desacolar();
+		if(librosSegunGenero == null){
+			System.out.println("No existen libros del género ingresado.");
+		} else {		
+			while (!librosSegunGenero.colaVacia()) {
+				Libro book = (Libro) librosSegunGenero.primero();
+				System.out.println("- " + book.getTitulo());
+				librosSegunGenero.desacolar();
+			}			
 		}
 
+		//Obtenemos los libros cuyo precio es inferior a un precio determinado utilizando obtenerLibrosPorPrecio(ABBTDACatalogo a, double price)
+		
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
-
-		System.out.println("LIBROS CON PRECIO MENOR A $20");
 		
-		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, 20);
+		Double precioBuscado = 20.05;
+		
+		System.out.println("LIBROS CON PRECIO MENOR A $"+ precioBuscado );
+		
+		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, precioBuscado);
 		ConjuntoTDA<String> conjClave;
 
 		if (!dicc.diccionarioVacio()) {
@@ -309,23 +331,28 @@ public class PruebaLibros {
 			while (!conjClave.conjuntoVacio()) {
 				String nombreGenero = (String) conjClave.elegir();
 				System.out.println();
-				System.out.println("Genero: " + nombreGenero);
+				System.out.println("Género: " + nombreGenero);
 				System.out.println();
 				ConjuntoTDA<Libro> conjLibro = dicc.recuperar(nombreGenero);
 				while (!conjLibro.conjuntoVacio()) {
 					Libro book = (Libro) conjLibro.elegir();
-					System.out.println(book.getTitulo());
+					System.out.println("- " + book.getTitulo());
 					conjLibro.sacar(book);
 				}
 				conjClave.sacar(nombreGenero);
 			}
+		}else{
+			System.out.println();
+			System.out.println("No existen libros con precio menor al ingresado.");
 		}
+		
+		//Obtenemos el género principal, que es aquél que posee más libros, utilizando obtenerGeneroPrincipal(ABBTDACatalogo arbol)
 
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
 
-		System.out.println("GENERO PRINCIPAL");
+		System.out.println("GÉNERO PRINCIPAL");
 		System.out.println();
 
 		String genero = obtenerGeneroPrincipal(abb);
@@ -333,21 +360,29 @@ public class PruebaLibros {
 		if (genero != null) {
 			System.out.println(genero);
 		} else {
-			System.out.println("No hay un g�nero principal.");
+			System.out.println("No hay un género principal.");
 		}
 
+		//Obtenemos los libros que corresponden a un autor determinado utilizando obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
+		
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
 
-		System.out.println("LIBROS DE JUAN");
-		System.out.println();
+		String autorBuscado = "maximo";
 		
-		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, "juan");
+		System.out.println("LIBROS DE '" + autorBuscado.toUpperCase() + "'");
+		System.out.println();
+				
+		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, autorBuscado);
 
+		if(librosObtenidos.colaVacia()){
+			System.out.println("No existen libros del autor ingresado.");
+		}
+		
 		while (!librosObtenidos.colaVacia()) {
 			Libro book = (Libro) librosObtenidos.primero();
-			System.out.println("Libro: " + book.getTitulo());
+			System.out.println("- " + book.getTitulo());
 			librosObtenidos.desacolar();
 		}
 
