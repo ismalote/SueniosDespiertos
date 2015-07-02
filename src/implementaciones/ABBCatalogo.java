@@ -8,8 +8,8 @@ public class ABBCatalogo implements ABBTDACatalogo{
 	
 	private class Nodo {
 		Genero genero;
-		ABBCatalogo hijoIzq;
-		ABBCatalogo hijoDer;
+		ABBTDACatalogo hijoIzq;
+		ABBTDACatalogo hijoDer;
 	}
 	
 	Nodo raiz;
