@@ -207,34 +207,34 @@ public class PruebaLibros {
 		ABBTDACatalogo abb = new ABBCatalogo();
 		abb.inicializar();
 
-		Libro libro1 = new Libro("Comedia", "lol1", "Yami", 4.50);
-		Libro libro2 = new Libro("Drama", "drama1", "Juan", 5.00);
-		Libro libro3 = new Libro("Drama", "drama2", "Juan", 10.80);
-		Libro libro4 = new Libro("Epico", "epic1", "Pedro", 20.50);
-		Libro libro5 = new Libro("Epico", "epic2", "Pedro", 30.00);
-		Libro libro6 = new Libro("Epico", "epic3", "Pedro", 40.50);
-		Libro libro7 = new Libro("Farsa", "farsa1", "Vieiro", 0.50);
-		Libro libro8 = new Libro("Farsa", "farsa2", "Vieiro", 1.00);
-		Libro libro9 = new Libro("Farsa", "farsa3", "Vieiro", 2.50);
-		Libro libro10 = new Libro("Farsa", "farsa4", "Vieiro", 3.50);
-		Libro libro11 = new Libro("Lirico", "lirico1", "Martin", 50.50);
-		Libro libro12 = new Libro("Lirico", "lirico2", "Martin", 60.00);
-		Libro libro13 = new Libro("Melodrama", "melo3", "Maximo", 70.50);
-		Libro libro14 = new Libro("Lirico", "lirico4", "Martin", 80.00);
-		Libro libro15 = new Libro("Lirico", "lirico5", "Martin", 90.50);
-		Libro libro16 = new Libro("Melodrama", "melo1", "Miguel", 100.50);
-		Libro libro17 = new Libro("Melodrama", "melo2", "Miguel", 23.50);
-		Libro libro18 = new Libro("Lirico", "lirico3", "Joan Manuel", 41.00);
-		Libro libro19 = new Libro("Arte", "arte1", "Pedro", 12.50);
-		Libro libro20 = new Libro("Melodrama", "melo5", "Miguel", 58.00);
-		Libro libro21 = new Libro("Melodrama", "melo6", "Miguel", 21.50);
-		Libro libro22 = new Libro("Tragedia", "tragedia1", "jose", 11.50);
-		Libro libro23 = new Libro("Tragedia", "tragedia2", "jose", 180.00);
-		Libro libro24 = new Libro("Arte", "arte2", "Hernan", 200.50);
-		Libro libro25 = new Libro("Tragedia", "tragedia3", "jose", 50.50);
-		Libro libro26 = new Libro("Tragedia", "tragedia4", "jose", 150.50);
-		Libro libro27 = new Libro("Tragedia", "tragedia5", "jose", 300.00);
-		Libro libro28 = new Libro("Tragedia", "tragedia6", "jose", 110.50);
+		Libro libro1 = new Libro("Comedia", "Chistes y Anecdotas", "Maria", 4.50);
+		Libro libro2 = new Libro("Drama", "Drama Volumen 1", "Juan", 5.00);
+		Libro libro3 = new Libro("Drama", "Drama Volumen 2", "Juan", 10.80);
+		Libro libro4 = new Libro("Epico", "Esfuerzo o heroísmo", "Pedro", 20.50);
+		Libro libro5 = new Libro("Epico", "Corazon", "Pedro", 30.00);
+		Libro libro6 = new Libro("Epico", "Para la historia", "Pedro", 40.50);
+		Libro libro7 = new Libro("Farsa", "Farsa 10", "Gomez", 10.50);
+		Libro libro8 = new Libro("Farsa", "Farsantes", "Gomez", 11.00);
+		Libro libro9 = new Libro("Farsa", "Farsa 8", "Gomez", 2.50);
+		Libro libro10 = new Libro("Farsa", "Otras farsas", "Gomez", 3.50);
+		Libro libro11 = new Libro("Lirico", "Entusiamo", "Martin", 50.50);
+		Libro libro12 = new Libro("Lirico", "Inspiracion", "Martin", 60.00);
+		Libro libro13 = new Libro("Melodrama", "Melodrama Volumen 1", "Maximo", 70.50);
+		Libro libro14 = new Libro("Lirico", "Historias liricas", "Martin", 80.00);
+		Libro libro15 = new Libro("Lirico", "Grandes jugadas", "Martin", 90.50);
+		Libro libro16 = new Libro("Melodrama", "Melodrama Volumen 2", "Miguel", 100.50);
+		Libro libro17 = new Libro("Melodrama", "Melodrama 3", "Miguel", 23.50);
+		Libro libro18 = new Libro("Lirico", "Ranking lirico", "Joan Manuel", 41.00);
+		Libro libro19 = new Libro("Arte", "Historia del arte", "Pedro", 12.50);
+		Libro libro20 = new Libro("Melodrama", "Melodrama, la continuacion", "Miguel", 58.00);
+		Libro libro21 = new Libro("Melodrama", "Melodrama, ultima etapa", "Maximo", 21.50);
+		Libro libro22 = new Libro("Tragedia", "Tragedy part 1", "jose", 11.50);
+		Libro libro23 = new Libro("Tragedia", "Tragedy part 2", "jose", 180.00);
+		Libro libro24 = new Libro("Arte", "Arte rupestre", "Hernan", 200.50);
+		Libro libro25 = new Libro("Tragedia", "Tragedia Importante", "jose", 50.50);
+		Libro libro26 = new Libro("Tragedia", "Tragedia Historica", "jose", 150.50);
+		Libro libro27 = new Libro("Tragedia", "Tragedia Volumen 1", "jose", 300.00);
+		Libro libro28 = new Libro("Tragedia", "Tragedia Volumen 2", "jose", 110.50);
 
 		abb.agregarLibro(libro11);
 		abb.agregarLibro(libro22);
@@ -300,8 +300,7 @@ public class PruebaLibros {
 		System.out.println();
 
 		System.out.println("LIBROS CON PRECIO MENOR A $20");
-		System.out.println();
-
+		
 		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, 20);
 		ConjuntoTDA<String> conjClave;
 
@@ -342,6 +341,8 @@ public class PruebaLibros {
 		System.out.println();
 
 		System.out.println("LIBROS DE JUAN");
+		System.out.println();
+		
 		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, "juan");
 
 		while (!librosObtenidos.colaVacia()) {
