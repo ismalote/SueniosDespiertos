@@ -255,6 +255,7 @@ public class PruebaLibros {
 		Libro libro26 = new Libro("Tragedia", "Tragedia Historica", "Jose", 150.50);
 		Libro libro27 = new Libro("Tragedia", "Tragedia Volumen 1", "Jose", 300.00);
 		Libro libro28 = new Libro("Tragedia", "Tragedia Volumen 2", "Jose", 110.50);
+		Libro libro29 = new Libro("Tragedia", "Tragedia, ultima etapa", "Maximo", 21.50);
 
 		// Cargamos los libros al Catálogo, que se ordenarán de acuerdo a su género.
 
@@ -286,6 +287,7 @@ public class PruebaLibros {
 		abb.agregarLibro(libro26);
 		abb.agregarLibro(libro27);
 		abb.agregarLibro(libro28);
+		abb.agregarLibro(libro29);
 
 		// Obtenemos los libros que corresponden a un género determinado utilizando obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen)
 

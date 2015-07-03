@@ -28,10 +28,15 @@ public class ABBCatalogo implements ABBTDACatalogo {
 
 	@Override
 	public void agregarLibro(Libro libro) {
+
+		int codigoComparacion = 0;
+		if (!this.arbolVacio()) {
+			codigoComparacion = raiz.genero.getNombre().compareToIgnoreCase(libro.getGenero());
+		}
 		/**
 		 * Si es el primer Libro o si el Género del Libro es el mismo que el de este Arbol
 		 */
-		if (this.arbolVacio() || raiz.genero.getNombre().equals(libro.getGenero())) {
+		if (this.arbolVacio() || codigoComparacion == 0) {
 			if (this.arbolVacio()) {
 				raiz = new Nodo();
 				raiz.genero = new Genero(libro.getGenero());
@@ -43,9 +48,9 @@ public class ABBCatalogo implements ABBTDACatalogo {
 			} else {
 				raiz.genero.addLibro(libro);
 			}
-		} else if (raiz.genero.getNombre().compareTo(libro.getGenero()) < 0) { // Si el Género del Libro es alfabéticamente mayor al Genero de este Arbol
+		} else if (codigoComparacion < 0) { // Si el Género del Libro es alfabéticamente mayor al Genero de este Arbol
 			raiz.hijoDer.agregarLibro(libro);
-		} else if (raiz.genero.getNombre().compareTo(libro.getGenero()) > 0) { // Si el Género del Libro es alfabéticamente menor al Genero de este Arbol
+		} else if (codigoComparacion > 0) { // Si el Género del Libro es alfabéticamente menor al Genero de este Arbol
 			raiz.hijoIzq.agregarLibro(libro);
 		}
 	}
@@ -53,30 +58,31 @@ public class ABBCatalogo implements ABBTDACatalogo {
 	@Override
 	public void eliminarGenero(Genero genero) {
 		if (!this.arbolVacio()) {
+			int codigoComparacion = raiz.genero.getNombre().compareToIgnoreCase(genero.getNombre());
 			/**
 			 * Si el Género fue hallado y estamos en un Nodo hoja
 			 */
-			if (raiz.genero.getNombre().equals(genero.getNombre()) && raiz.hijoDer.arbolVacio() && raiz.hijoIzq.arbolVacio()) {
+			if (codigoComparacion == 0 && raiz.hijoDer.arbolVacio() && raiz.hijoIzq.arbolVacio()) {
 				raiz = null;
 			}
 			/**
 			 * Si el Género fue hallado y tiene al menos un hijo a su izquierda para que lo reemplace
 			 */
-			else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoIzq.arbolVacio()) {
+			else if (codigoComparacion == 0 && !raiz.hijoIzq.arbolVacio()) {
 				raiz.genero = this.mayor(raiz.hijoIzq);
 				raiz.hijoIzq.eliminarGenero(raiz.genero);
 			}
 			/**
 			 * Si el Género fue hallado y tiene al menos un hijo a su derecha para que lo reemplace
 			 */
-			else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoDer.arbolVacio()) {
+			else if (codigoComparacion == 0 && !raiz.hijoDer.arbolVacio()) {
 				raiz.genero = this.menor(raiz.hijoDer);
 				raiz.hijoDer.eliminarGenero(raiz.genero);
 			}
 			/**
 			 * Si el Género buscado es alfabéticamente mayor al Género del Arbol lo buscamos en su hijo derecho
 			 */
-			else if (raiz.genero.getNombre().compareTo(genero.getNombre()) < 0) {
+			else if (codigoComparacion < 0) {
 				raiz.hijoDer.eliminarGenero(genero);
 			}
 			/**
@@ -90,22 +96,23 @@ public class ABBCatalogo implements ABBTDACatalogo {
 
 	@Override
 	public void eliminarLibro(Libro libro) {
-		/**
-		 * Si fue hallado el Género del Libro
-		 * 
-		 * TODO Sacar [!raiz.hijoDer.arbolVacio() &&]
-		 */
-		if (raiz.genero.getNombre().equals(libro.getGenero())) {
-			raiz.genero.borrarLibro(libro);
-			if (raiz.genero.getLibros().colaVacia()) // Si el Género no tiene mas libros
-				eliminarGenero(raiz.genero);
-		} else if (!raiz.hijoDer.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) < 0) { // Si el Genero del Libro es menor alfabéticamente
-			raiz.hijoDer.eliminarLibro(libro);
-		} else if (!raiz.hijoIzq.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0) { // Si el Genero del Libro es mayor alfabéticamente
-			raiz.hijoIzq.eliminarLibro(libro);
-		} else {
-			System.out.println("El libro no existe para ser eliminado.");
-			return;
+		if (!this.arbolVacio()) {
+			int codigoComparacion = raiz.genero.getNombre().compareToIgnoreCase(libro.getGenero());
+			/**
+			 * Si fue hallado el Género del Libro
+			 * 
+			 */
+			if (codigoComparacion == 0) {
+				raiz.genero.borrarLibro(libro);
+				if (raiz.genero.getLibros().colaVacia()) { // Si el Género no tiene mas libros
+					eliminarGenero(raiz.genero);
+				}
+			} else if (codigoComparacion < 0) { // Si el Genero del Libro es menor alfabéticamente
+				raiz.hijoDer.eliminarLibro(libro);
+
+			} else { // Si el Genero del Libro es mayor alfabéticamente
+				raiz.hijoIzq.eliminarLibro(libro);
+			}
 		}
 	}
 
