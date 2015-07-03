@@ -10,6 +10,26 @@ import TDA.ConjuntoTDA;
 import clases.Genero;
 import clases.Libro;
 
+/**
+ * TP Programación II
+ * 
+ * @date 07-2015
+ * @author Mejía Rodríguez, Juan José LU:1050971
+ * 
+ *         Cariati, Yamila Soledad LU:1064010
+ * 
+ *         Maldonado, Martin LU:1056424
+ * 
+ *         Ojeda, Walter Nahuel LU:1053749
+ * 
+ *         Riccombeni, Maximiliano LU:1017172
+ * 
+ *         Sevil, Rodrigo Nicolás LU:1059951
+ * 
+ *         Vieiro, Javier Martin LU:1062141
+ * 
+ * 
+ */
 public class PruebaLibros {
 
 	/**
