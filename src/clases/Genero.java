@@ -29,7 +29,7 @@ public class Genero {
 	}
 
 	/**
-	 * Borra un {@link Libro} que pertenezca a �ste {@link Genero}
+	 * Borra un {@link Libro} que pertenezca a este {@link Genero}
 	 * 
 	 * @param libro
 	 */
@@ -41,7 +41,7 @@ public class Genero {
 		aux.inicializarCola();
 
 		/**
-		 * Hacemos una copia de los Libros de �ste G�nero en la Cola auxiliar, omitiendo los Libros que desamos borrar
+		 * Hacemos una copia de los Libros de este Género en la Cola auxiliar, omitiendo los Libros que desamos borrar
 		 */
 		while (!libros.colaVacia()) {
 			if (!libros.primero().equals(libro)) {
@@ -65,9 +65,9 @@ public class Genero {
 	}
 
 	/**
-	 * Devuelve una {@link Cola} que contiene los Libros de este G�nero.
+	 * Devuelve una {@link Cola} que contiene los Libros de este Género.
 	 * 
-	 * @return Una copia de los Libros de �ste {@link Genero}
+	 * @return Una copia de los Libros de este {@link Genero}
 	 */
 	public ColaTDA<Libro> getLibros() {
 		/**
@@ -77,7 +77,7 @@ public class Genero {
 		colaAux.inicializarCola();
 
 		/**
-		 * Creamos la instancia de Cola que se retornar�
+		 * Creamos la instancia de Cola que se retornará
 		 */
 		ColaTDA<Libro> colaARetornar = new Cola<Libro>();
 		colaARetornar.inicializarCola();
