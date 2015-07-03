@@ -30,24 +30,14 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 
 	@Override
 	public void agregar(String clave, Libro valor) {
-		NodoDic aux = priClave;
 
 		/**
 		 * Buscamos un Género en donde agregar el Libro
 		 */
-		while (aux != null && !aux.clave.equals(clave)) {
-			aux = aux.sig;
-		}
+		NodoDic aux = buscarGenero(clave);
 
 		if (aux != null) { // Si Encontramos un Género
-			NodoV auxV = aux.valores;
-
-			/**
-			 * Buscamos si el Libro existe
-			 */
-			while (auxV != null && !auxV.valor.equals(valor)) {
-				auxV = auxV.sig;
-			}
+			NodoV auxV = buscarLibro(aux, valor);
 
 			/**
 			 * Solo si no existe lo agregamos, si existe lo ignoramos
@@ -98,9 +88,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 		/**
 		 * Nos posicionamos en el Género del libro
 		 */
-		while (!aux.clave.equals(clave)) {
-			aux = aux.sig;
-		}
+		aux = buscarGenero(clave);
 
 		NodoV auxV = aux.valores;
 		/**
@@ -137,9 +125,7 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 		/**
 		 * Ubicamos el Género buscado
 		 */
-		while (!aux.clave.equals(clave)) {
-			aux = aux.sig;
-		}
+		aux = buscarGenero(clave);
 
 		/**
 		 * Recorremos los Libros para agregarlos al conjunto
@@ -176,6 +162,30 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 	@Override
 	public boolean diccionarioVacio() {
 		return (priClave == null);
+	}
+
+	private NodoDic buscarGenero(String genero) {
+		NodoDic aux = priClave;
+
+		/**
+		 * Buscamos un Género
+		 */
+		while (aux != null && !aux.clave.equals(genero)) {
+			aux = aux.sig;
+		}
+		return aux;
+	}
+
+	private NodoV buscarLibro(NodoDic aux, Libro valor) {
+		NodoV auxV = aux.valores;
+
+		/**
+		 * Buscamos si el Libro existe
+		 */
+		while (auxV != null && !auxV.valor.equals(valor)) {
+			auxV = auxV.sig;
+		}
+		return auxV;
 	}
 
 }
