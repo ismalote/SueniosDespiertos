@@ -46,4 +46,20 @@ public class Libro {
 		this.precio = precio;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this){
+			return true;
+		}
+		
+		if (obj == null || obj instanceof Libro == false){
+			return false;
+		}
+		
+		Libro otro = (Libro)obj;
+		return this.getAutor() == otro.getAutor() 
+				&& this.getTitulo() == otro.getTitulo()
+				&& this.getGenero() == otro.getGenero()
+				&& this.getPrecio() == otro.getPrecio();
+	}
 }
