@@ -53,10 +53,7 @@ public class Genero {
 		/**
 		 * Volvemos a ubicar a los Libros en la Cola de Libros
 		 */
-		while (!aux.colaVacia()) {
-			libros.acolar(aux.primero());
-			aux.desacolar();
-		}
+		volverALlenarColaLibros(aux);
 	}
 
 	public String getNombre() {
@@ -94,12 +91,19 @@ public class Genero {
 			libros.desacolar();
 		}
 
+		/**
+		 * Volvemos a ubicar a los Libros en la Cola de Libros
+		 */
+		volverALlenarColaLibros(colaAux);
+		
+		return colaARetornar;
+	}
+	
+	private void volverALlenarColaLibros(ColaTDA<Libro> colaAux){
 		while (!colaAux.colaVacia()){
 			libros.acolar(colaAux.primero());
 			colaAux.desacolar();
 		}
-		
-		return colaARetornar;
 	}
 	
 }
