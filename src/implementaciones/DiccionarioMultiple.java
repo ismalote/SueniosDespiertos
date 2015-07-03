@@ -73,11 +73,11 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 			} else {
 				/**
 				 * Iteramos para ubicar el Género buscado y eliminarlo
-				 */
-				while (!aux.sig.clave.equals(clave)) {
+				 */				
+				while (aux.sig != null && !aux.sig.clave.equals(clave)) {
 					aux = aux.sig;
 				}
-				if(aux != null){ // Si encontramos el Género lo eliminamos, sino no se hace nada
+				if(aux.sig != null){ // Si encontramos el Género lo eliminamos, sino no se hace nada
 					aux.sig = aux.sig.sig;
 				}
 			}			
@@ -105,10 +105,10 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 				/**
 				 * Iteramos para ubicar el Libro buscado y eliminarlo
 				 */
-				while (!auxV.sig.valor.equals(valor)) {
+				while (auxV.sig != null && !auxV.sig.valor.equals(valor)) {
 					auxV = auxV.sig;
 				}
-				if(auxV != null){ // Si encontramos el Libro lo eliminamos, sino no se hace nada
+				if(auxV.sig != null){ // Si encontramos el Libro lo eliminamos, sino no se hace nada
 					auxV.sig = auxV.sig.sig;
 				}
 			}

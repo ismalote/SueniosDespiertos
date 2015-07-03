@@ -69,14 +69,14 @@ public class PruebaLibros {
 		 * Iteramos sobre los generos
 		 */
 		while (!generos.colaVacia()) {
-			Genero generoActual = (Genero) generos.primero();
+			Genero generoActual = generos.primero();
 
 			/**
 			 * Iteramos sobre los libros del genero
 			 */
 			ColaTDA<Libro> libros = generoActual.getLibros();
 			while (!libros.colaVacia()) {
-				Libro libroActual = (Libro) libros.primero();
+				Libro libroActual = libros.primero();
 
 				/**
 				 * Evaluamos si debe entrar en el diccionario
@@ -115,14 +115,14 @@ public class PruebaLibros {
 			 * Iteramos sobre los generos
 			 */
 			while (!generos.colaVacia()) {
-				Genero generoActual = (Genero) generos.primero();
+				Genero generoActual = generos.primero();
 
 				/**
 				 * Iteramos sobre los libros del genero
 				 */
 				ColaTDA<Libro> libros = generoActual.getLibros();
 				while (!libros.colaVacia()) {
-					Libro libroActual = (Libro) libros.primero();
+					Libro libroActual = libros.primero();
 
 					/**
 					 * Evaluamos si debe entrar en la cola
@@ -161,7 +161,7 @@ public class PruebaLibros {
 		 * Iteramos sobre los generos
 		 */
 		while (!generos.colaVacia()) {
-			Genero gen = (Genero) generos.primero();
+			Genero gen = generos.primero();
 			/**
 			 * Evaluamos si la cantidad de libros del genero actual es la mayor encontrada
 			 */
@@ -422,7 +422,7 @@ public class PruebaLibros {
 			System.out.println("No hay un género principal.");
 		}
 
-		// Obtenemos los libros que corresponden a un autor determinado utilizando obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
+		// Obtenemos los libros que corresponden a un autor determinado utilizando obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor)
 
 		System.out.println();
 		System.out.println("---------------------------------------");
