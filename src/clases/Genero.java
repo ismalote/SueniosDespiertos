@@ -19,6 +19,46 @@ public class Genero {
 		this.libros.inicializarCola();
 	}
 
+	/**
+	 * Agrega un {@link Libro} al {@link Genero}
+	 * 
+	 * @param libro
+	 */
+	public void addLibro(Libro libro) {
+		this.libros.acolar(libro);
+	}
+
+	/**
+	 * Borra un {@link Libro} que pertenezca a éste {@link Genero}
+	 * 
+	 * @param libro
+	 */
+	public void borrarLibro(Libro libro) {
+		/**
+		 * Creamos una Cola auxiliar
+		 */
+		ColaTDA<Libro> aux = new Cola<Libro>();
+		aux.inicializarCola();
+
+		/**
+		 * Hacemos una copia de los Libros de éste Género en la Cola auxiliar, omitiendo los Libros que desamos borrar
+		 */
+		while (!libros.colaVacia()) {
+			if (!libros.primero().equals(libro)) {
+				aux.acolar(libros.primero());
+			}
+			libros.desacolar();
+		}
+
+		/**
+		 * Volvemos a ubicar a los Libros en la Cola de Libros
+		 */
+		while (!aux.colaVacia()) {
+			libros.acolar(aux.primero());
+			aux.desacolar();
+		}
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -27,38 +67,27 @@ public class Genero {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * Devuelve una {@link Cola} que contiene los Libros de este Género.
+	 * 
+	 * @return Una copia de los Libros de éste {@link Genero}
+	 */
 	public ColaTDA<Libro> getLibros() {
-		return this.copiarColaLibros();
-	}
-
-	public void addLibro(Libro libro) {
-		this.libros.acolar(libro);
-	}
-
-	public void borrarLibro(Libro libro) {
-		ColaTDA<Libro> aux = new Cola<Libro>();
-		aux.inicializarCola();
-
-		while (!libros.colaVacia()) {
-			if (!libros.primero().equals(libro)) {
-				aux.acolar(libros.primero());
-			}
-			libros.desacolar();
-		}
-
-		while (!aux.colaVacia()) {
-			libros.acolar(aux.primero());
-			aux.desacolar();
-		}
-	}
-
-	private ColaTDA<Libro> copiarColaLibros() {
+		/**
+		 * Creamos una Cola auxiliar
+		 */
 		ColaTDA<Libro> colaAux = new Cola<Libro>();
 		colaAux.inicializarCola();
 
+		/**
+		 * Creamos la instancia de Cola que se retornará
+		 */
 		ColaTDA<Libro> colaARetornar = new Cola<Libro>();
 		colaARetornar.inicializarCola();
 
+		/**
+		 * Copiamos los Libros en la Cola auxiliar y en la de retorno
+		 */
 		while (!libros.colaVacia()) {
 			colaARetornar.acolar(libros.primero());
 			colaAux.acolar(libros.primero());
@@ -66,7 +95,6 @@ public class Genero {
 		}
 
 		libros = colaAux;
-
 		return colaARetornar;
 	}
 }
