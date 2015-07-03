@@ -22,7 +22,7 @@ public class Genero {
 	/**
 	 * Agrega un {@link Libro} al {@link Genero}
 	 * 
-	 * @param libro
+	 * @param libro 
 	 */
 	public void addLibro(Libro libro) {
 		this.libros.acolar(libro);
