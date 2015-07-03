@@ -31,7 +31,7 @@ public class Libro {
 	}
 
 	public String getAutor() {
-		return autor;
+		return this.autor;
 	}
 
 	public void setAutor(String autor) {
@@ -42,7 +42,7 @@ public class Libro {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
