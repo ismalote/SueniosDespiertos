@@ -63,54 +63,57 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 	@Override
 	public void eliminar(String clave) {
 		NodoDic aux = priClave;
-
-		/**
-		 * Verificamos si se quiere eliminar el primer Género
-		 */
-		if (aux.clave.equals(clave)) {
-			aux = aux.sig;
-			priClave = aux;
-		} else {
+		if(aux != null){
 			/**
-			 * Iteramos para ubicar el Género buscado y eliminarlo
+			 * Verificamos si se quiere eliminar el primer Género
 			 */
-			while (!aux.sig.clave.equals(clave)) {
+			if (aux.clave.equals(clave)) {
 				aux = aux.sig;
-			}
-			aux.sig = aux.sig.sig;
+				priClave = aux;
+			} else {
+				/**
+				 * Iteramos para ubicar el Género buscado y eliminarlo
+				 */
+				while (!aux.sig.clave.equals(clave)) {
+					aux = aux.sig;
+				}
+				if(aux != null){ // Si encontramos el Género lo eliminamos, sino no se hace nada
+					aux.sig = aux.sig.sig;
+				}
+			}			
 		}
 	}
 
 	@Override
 	public void eliminarValor(String clave, Libro valor) {
-		NodoDic aux = priClave;
-
 		/**
 		 * Nos posicionamos en el Género del libro
 		 */
-		aux = buscarGenero(clave);
-
-		NodoV auxV = aux.valores;
-		/**
-		 * Verificamos si se quiere eliminar el primer Libro
-		 */
-		if (auxV.valor.equals(valor)) {
-			auxV = auxV.sig;
-			aux.valores = auxV;
-			if (aux.valores == null) { // Si el Género no tiene mas Libros
-				eliminar(aux.clave);
-			}
-		} else {
+		NodoDic aux = buscarGenero(clave);
+		if(aux != null){  // Si encontramos el Género, sino no se hace nada			
+			NodoV auxV = aux.valores;
 			/**
-			 * Iteramos para ubicar el Libro buscado y eliminarlo
+			 * Verificamos si se quiere eliminar el primer Libro
 			 */
-			while (!auxV.sig.valor.equals(valor)) {
+			if (auxV.valor.equals(valor)) {
 				auxV = auxV.sig;
+				aux.valores = auxV;
+				if (aux.valores == null) { // Si el Género no tiene mas Libros
+					eliminar(aux.clave);
+				}
+			} else {
+				/**
+				 * Iteramos para ubicar el Libro buscado y eliminarlo
+				 */
+				while (!auxV.sig.valor.equals(valor)) {
+					auxV = auxV.sig;
+				}
+				if(auxV != null){ // Si encontramos el Libro lo eliminamos, sino no se hace nada
+					auxV.sig = auxV.sig.sig;
+				}
 			}
-			auxV.sig = auxV.sig.sig;
-		}
-
-	}
+		}		
+	}		
 
 	@Override
 	public ConjuntoTDA<Libro> recuperar(String clave) {
@@ -119,23 +122,20 @@ public class DiccionarioMultiple implements DiccionarioMultipleTDA {
 		 */
 		ConjuntoTDA<Libro> conjunto = new Conjunto<Libro>();
 		conjunto.inicializarConjunto();
-
-		NodoDic aux = priClave;
-
 		/**
 		 * Ubicamos el Género buscado
 		 */
-		aux = buscarGenero(clave);
-
-		/**
-		 * Recorremos los Libros para agregarlos al conjunto
-		 */
-		NodoV auxV = aux.valores;
-		while (auxV != null) {
-			conjunto.agregar(auxV.valor);
-			auxV = auxV.sig;
+		NodoDic aux = buscarGenero(clave);
+		if(aux != null) { // Si encontramos el Género
+			/**
+			 * Recorremos los Libros para agregarlos al conjunto
+			 */
+			NodoV auxV = aux.valores;
+			while (auxV != null) {
+				conjunto.agregar(auxV.valor);
+				auxV = auxV.sig;
+			}
 		}
-
 		return conjunto;
 	}
 
