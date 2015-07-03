@@ -62,4 +62,56 @@ public class LibroTest {
 		assertEquals(precio, libro.getPrecio(),2);
 	}
 	
+	@Test
+	public void test_equals_null_devuelve_false(){
+		boolean areEqual = libro.equals(null);
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void test_equals_mismaInstancia_devuelve_true(){
+		boolean areEqual = libro.equals(libro);
+		assertTrue(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraClase_devuelve_false(){
+		boolean areEqual = libro.equals("asdasd");
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraInstanciaMismoEstado_devuelve_true(){
+		Libro otro = new Libro(libro.getGenero(),libro.getTitulo(),libro.getAutor(),libro.getPrecio());
+		boolean areEqual = libro.equals(otro);
+		assertTrue(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraInstanciaDistintoGenero_devuelve_false(){
+		Libro otro = new Libro("g2",libro.getTitulo(),libro.getAutor(),libro.getPrecio());
+		boolean areEqual = libro.equals(otro);
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraInstanciaDistintoTitulo_devuelve_false(){
+		Libro otro = new Libro(libro.getGenero(),"t2",libro.getAutor(),libro.getPrecio());
+		boolean areEqual = libro.equals(otro);
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraInstanciaDistintoAutor_devuelve_false(){
+		Libro otro = new Libro(libro.getGenero(),libro.getTitulo(),"a2",libro.getPrecio());
+		boolean areEqual = libro.equals(otro);
+		assertFalse(areEqual);
+	}
+	
+	@Test
+	public void test_equals_otraInstanciaDistintoPrecio_devuelve_false(){
+		Libro otro = new Libro(libro.getGenero(),libro.getTitulo(),libro.getAutor(),10);
+		boolean areEqual = libro.equals(otro);
+		assertFalse(areEqual);
+	}
 }
