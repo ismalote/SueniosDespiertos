@@ -298,6 +298,7 @@ public class PruebaLibros {
 		ColaTDA<Libro> librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
 		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
+		System.out.println("Esperado: \"Chistes y Anecdotas\"");
 		System.out.println();
 
 		if (librosSegunGenero == null) {
@@ -321,6 +322,13 @@ public class PruebaLibros {
 		librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
 
 		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
+		System.out.println("Esperado:\t\"Tragedy part 1\"");
+		System.out.println("\t\t\"Tragedy part 2\"");
+		System.out.println("\t\t\"Tragedia Importante\"");
+		System.out.println("\t\t\"Tragedia Historica\"");
+		System.out.println("\t\t\"Tragedia Volumen 1\"");
+		System.out.println("\t\t\"Tragedia Volumen 2\"");
+		System.out.println("\t\t\"Tragedia, ultima etapa\"");
 		System.out.println();
 
 		if (librosSegunGenero == null) {
@@ -342,6 +350,16 @@ public class PruebaLibros {
 		Double precioBuscado = 20.05;
 
 		System.out.println("LIBROS CON PRECIO MENOR A $" + precioBuscado);
+		System.out.println("Esperado:");
+		System.out.println("\t\t\"Chistes y Anecdotas\"");
+		System.out.println("\t\t\"Tragedy part 1\"");
+		System.out.println("\t\t\"Historia del arte\"");
+		System.out.println("\t\t\"Otras farsas\"");
+		System.out.println("\t\t\"Farsa 10\"");
+		System.out.println("\t\t\"Farsa 8\"");
+		System.out.println("\t\t\"Farsantes\"");
+		System.out.println("\t\t\"Drama Volumen 1\"");
+		System.out.println("\t\t\"Drama Volumen 2\"");
 
 		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, precioBuscado);
 		ConjuntoTDA<String> conjClave;
@@ -373,6 +391,7 @@ public class PruebaLibros {
 		System.out.println();
 
 		System.out.println("GÉNERO PRINCIPAL");
+		System.out.println("Esperado:\t Tragedia");
 		System.out.println();
 
 		String genero = obtenerGeneroPrincipal(abb);
@@ -391,7 +410,10 @@ public class PruebaLibros {
 
 		String autorBuscado = "maximo";
 
-		System.out.println("LIBROS DE '" + autorBuscado.toUpperCase() + "'");
+		System.out.println("LIBROS SEGUN AUTOR: '" + autorBuscado.toUpperCase() + "'");
+		System.out.println("Esperado:\t \"Melodrama Volumen 1\"");
+		System.out.println("\t\t\"Melodrama, ultima etapa\"");
+		System.out.println("\t\t\"Tragedia, ultima etapa\"");
 		System.out.println();
 
 		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, autorBuscado);
