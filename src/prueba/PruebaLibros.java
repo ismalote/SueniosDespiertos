@@ -12,16 +12,28 @@ import clases.Libro;
 
 public class PruebaLibros {
 
-	public static ColaTDA<Libro> obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen) {
+	/**
+	 * 
+	 * @param arbol
+	 * @param genero
+	 * @return Una {@link ColaTDA} con los Libros que pertenecen al <code>genero</code> en el {@link ABBTDACatalogo} <code>arbol</code>
+	 */
+	public static ColaTDA<Libro> obtenerLibrosSegunGenero(ABBTDACatalogo arbol, String genero) {
 
-		Genero genero = buscarGenero(a, strGen);
-		if (genero != null) {
-			return genero.getLibros();
+		Genero encontrado = buscarGenero(arbol, genero);
+		if (encontrado != null) {
+			return encontrado.getLibros();
 		}
 		return null;
 	}
 
-	public static DiccionarioMultipleTDA obtenerLibrosPorPrecio(ABBTDACatalogo a, double price) {
+	/**
+	 * 
+	 * @param arbol
+	 * @param precio
+	 * @return Un {@link DiccionarioMultipleTDA} con los Libros con precio menor al <code>precio</code> en el {@link ABBTDACatalogo} <code>arbol</code>
+	 */
+	public static DiccionarioMultipleTDA obtenerLibrosPorPrecio(ABBTDACatalogo arbol, double precio) {
 
 		DiccionarioMultipleTDA dic = new DiccionarioMultiple();
 		dic.inicializarDiccionario();
@@ -31,7 +43,7 @@ public class PruebaLibros {
 		 */
 		ColaTDA<Genero> generos = new Cola<Genero>();
 		generos.inicializarCola();
-		obtenerGeneros(a, generos);
+		obtenerGeneros(arbol, generos);
 
 		/**
 		 * Iteramos sobre los generos
@@ -49,7 +61,7 @@ public class PruebaLibros {
 				/**
 				 * Evaluamos si debe entrar en el diccionario
 				 */
-				if (libroActual.getPrecio() < price) {
+				if (libroActual.getPrecio() < precio) {
 					dic.agregar(generoActual.getNombre(), libroActual);
 				}
 				libros.desacolar();
@@ -60,7 +72,13 @@ public class PruebaLibros {
 		return dic;
 	}
 
-	public static ColaTDA<Libro> obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
+	/**
+	 * 
+	 * @param arbol
+	 * @param autor
+	 * @return Una {@link ColaTDA} con los Libros del <code>autor</code> en el {@link ABBTDACatalogo} <code>arbol</code>
+	 */
+	public static ColaTDA<Libro> obtenerLibrosSegunAutor(ABBTDACatalogo arbol, String autor) {
 		ColaTDA<Libro> cola = new Cola<Libro>();
 		cola.inicializarCola();
 
@@ -71,7 +89,7 @@ public class PruebaLibros {
 			 */
 			ColaTDA<Genero> generos = new Cola<Genero>();
 			generos.inicializarCola();
-			obtenerGeneros(a, generos);
+			obtenerGeneros(arbol, generos);
 
 			/**
 			 * Iteramos sobre los generos
@@ -148,7 +166,7 @@ public class PruebaLibros {
 			/**
 			 * Si es igual
 			 */
-			if (compareResult == 0) { 
+			if (compareResult == 0) {
 				genero = arbol.obtenerGenero();
 			} else
 			/**
@@ -207,8 +225,8 @@ public class PruebaLibros {
 		ABBTDACatalogo abb = new ABBCatalogo();
 		abb.inicializar();
 
-		//Creamos cada libro que serán cargados en el catálogo
-		
+		// Creamos cada libro que serán cargados en el catálogo
+
 		Libro libro1 = new Libro("Comedia", "Chistes y Anecdotas", "Maria", 4.50);
 		Libro libro2 = new Libro("Drama", "Drama Volumen 1", "Juan", 5.00);
 		Libro libro3 = new Libro("Drama", "Drama Volumen 2", "Juan", 10.80);
@@ -238,8 +256,8 @@ public class PruebaLibros {
 		Libro libro27 = new Libro("Tragedia", "Tragedia Volumen 1", "Jose", 300.00);
 		Libro libro28 = new Libro("Tragedia", "Tragedia Volumen 2", "Jose", 110.50);
 
-		//Cargamos los libros al Catálogo, que se ordenarán de acuerdo a su género.
-		
+		// Cargamos los libros al Catálogo, que se ordenarán de acuerdo a su género.
+
 		abb.agregarLibro(libro11);
 		abb.agregarLibro(libro22);
 		abb.agregarLibro(libro3);
@@ -269,10 +287,10 @@ public class PruebaLibros {
 		abb.agregarLibro(libro27);
 		abb.agregarLibro(libro28);
 
-		//Obtenemos los libros que corresponden a un género determinado utilizando obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen)
-		
+		// Obtenemos los libros que corresponden a un género determinado utilizando obtenerLibrosSegunGenero(ABBTDACatalogo a, String strGen)
+
 		String generoBuscado = "Comedia";
-		
+
 		Genero gene = new Genero(generoBuscado);
 
 		ColaTDA<Libro> librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
@@ -280,14 +298,14 @@ public class PruebaLibros {
 		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
 		System.out.println();
 
-		if(librosSegunGenero == null){
+		if (librosSegunGenero == null) {
 			System.out.println("No existen libros del género ingresado.");
-		} else {		
+		} else {
 			while (!librosSegunGenero.colaVacia()) {
 				Libro book = (Libro) librosSegunGenero.primero();
 				System.out.println("- " + book.getTitulo());
 				librosSegunGenero.desacolar();
-			}			
+			}
 		}
 
 		System.out.println();
@@ -295,7 +313,7 @@ public class PruebaLibros {
 		System.out.println();
 
 		generoBuscado = "Tragedia";
-		
+
 		gene.setNombre(generoBuscado);
 
 		librosSegunGenero = obtenerLibrosSegunGenero(abb, gene.getNombre());
@@ -303,26 +321,26 @@ public class PruebaLibros {
 		System.out.println("LIBROS SEGUN GÉNERO '" + generoBuscado.toUpperCase() + "'");
 		System.out.println();
 
-		if(librosSegunGenero == null){
+		if (librosSegunGenero == null) {
 			System.out.println("No existen libros del género ingresado.");
-		} else {		
+		} else {
 			while (!librosSegunGenero.colaVacia()) {
 				Libro book = (Libro) librosSegunGenero.primero();
 				System.out.println("- " + book.getTitulo());
 				librosSegunGenero.desacolar();
-			}			
+			}
 		}
 
-		//Obtenemos los libros cuyo precio es inferior a un precio determinado utilizando obtenerLibrosPorPrecio(ABBTDACatalogo a, double price)
-		
+		// Obtenemos los libros cuyo precio es inferior a un precio determinado utilizando obtenerLibrosPorPrecio(ABBTDACatalogo a, double price)
+
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
-		
+
 		Double precioBuscado = 20.05;
-		
-		System.out.println("LIBROS CON PRECIO MENOR A $"+ precioBuscado );
-		
+
+		System.out.println("LIBROS CON PRECIO MENOR A $" + precioBuscado);
+
 		DiccionarioMultipleTDA dicc = obtenerLibrosPorPrecio(abb, precioBuscado);
 		ConjuntoTDA<String> conjClave;
 
@@ -341,12 +359,12 @@ public class PruebaLibros {
 				}
 				conjClave.sacar(nombreGenero);
 			}
-		}else{
+		} else {
 			System.out.println();
 			System.out.println("No existen libros con precio menor al ingresado.");
 		}
-		
-		//Obtenemos el género principal, que es aquél que posee más libros, utilizando obtenerGeneroPrincipal(ABBTDACatalogo arbol)
+
+		// Obtenemos el género principal, que es aquél que posee más libros, utilizando obtenerGeneroPrincipal(ABBTDACatalogo arbol)
 
 		System.out.println();
 		System.out.println("---------------------------------------");
@@ -363,23 +381,23 @@ public class PruebaLibros {
 			System.out.println("No hay un género principal.");
 		}
 
-		//Obtenemos los libros que corresponden a un autor determinado utilizando obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
-		
+		// Obtenemos los libros que corresponden a un autor determinado utilizando obtenerLibrosSegunAutor(ABBTDACatalogo a, String autor) {
+
 		System.out.println();
 		System.out.println("---------------------------------------");
 		System.out.println();
 
 		String autorBuscado = "maximo";
-		
+
 		System.out.println("LIBROS DE '" + autorBuscado.toUpperCase() + "'");
 		System.out.println();
-				
+
 		ColaTDA<Libro> librosObtenidos = obtenerLibrosSegunAutor(abb, autorBuscado);
 
-		if(librosObtenidos.colaVacia()){
+		if (librosObtenidos.colaVacia()) {
 			System.out.println("No existen libros del autor ingresado.");
 		}
-		
+
 		while (!librosObtenidos.colaVacia()) {
 			Libro book = (Libro) librosObtenidos.primero();
 			System.out.println("- " + book.getTitulo());

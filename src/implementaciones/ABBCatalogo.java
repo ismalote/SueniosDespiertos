@@ -1,34 +1,38 @@
 package implementaciones;
 
+import tdas.ABBTDACatalogo;
 import clases.Genero;
 import clases.Libro;
-import tdas.ABBTDACatalogo;
 
-public class ABBCatalogo implements ABBTDACatalogo{
-	
+public class ABBCatalogo implements ABBTDACatalogo {
+
 	private class Nodo {
 		Genero genero;
+
 		ABBTDACatalogo hijoIzq;
+
 		ABBTDACatalogo hijoDer;
 	}
-	
+
 	Nodo raiz;
-	
+
 	@Override
 	public void inicializar() {
-		raiz=null;
-		
+		raiz = null;
 	}
 
 	@Override
 	public boolean arbolVacio() {
-		return raiz==null;
+		return raiz == null;
 	}
 
 	@Override
 	public void agregarLibro(Libro libro) {
-		if(raiz==null || raiz.genero.getNombre().equals(libro.getGenero())){
-			if(raiz == null){
+		/**
+		 * Si es el primer Libro o si el Género del Libro es el mismo que el de este Arbol
+		 */
+		if (this.arbolVacio() || raiz.genero.getNombre().equals(libro.getGenero())) {
+			if (this.arbolVacio()) {
 				raiz = new Nodo();
 				raiz.genero = new Genero(libro.getGenero());
 				raiz.genero.addLibro(libro);
@@ -36,31 +40,49 @@ public class ABBCatalogo implements ABBTDACatalogo{
 				raiz.hijoIzq.inicializar();
 				raiz.hijoDer = new ABBCatalogo();
 				raiz.hijoDer.inicializar();
-			}else{
+			} else {
 				raiz.genero.addLibro(libro);
 			}
-		}else if(raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
+		} else if (raiz.genero.getNombre().compareTo(libro.getGenero()) < 0) { // Si el Género del Libro es alfabéticamente mayor al Genero de este Arbol
 			raiz.hijoDer.agregarLibro(libro);
-		}else if(raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
+		} else if (raiz.genero.getNombre().compareTo(libro.getGenero()) > 0) { // Si el Género del Libro es alfabéticamente menor al Genero de este Arbol
 			raiz.hijoIzq.agregarLibro(libro);
 		}
-		
 	}
 
 	@Override
 	public void eliminarGenero(Genero genero) {
-		if(raiz != null){
-			if(raiz.genero.getNombre().equals(genero.getNombre()) && raiz.hijoDer.arbolVacio() && raiz.hijoIzq.arbolVacio()){
+		if (!this.arbolVacio()) {
+			/**
+			 * Si el Género fue hallado y estamos en un Nodo hoja
+			 */
+			if (raiz.genero.getNombre().equals(genero.getNombre()) && raiz.hijoDer.arbolVacio() && raiz.hijoIzq.arbolVacio()) {
 				raiz = null;
-			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoIzq.arbolVacio()){
+			}
+			/**
+			 * Si el Género fue hallado y tiene al menos un hijo a su izquierda para que lo reemplace
+			 */
+			else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoIzq.arbolVacio()) {
 				raiz.genero = this.mayor(raiz.hijoIzq);
 				raiz.hijoIzq.eliminarGenero(raiz.genero);
-			}else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoDer.arbolVacio()){
+			}
+			/**
+			 * Si el Género fue hallado y tiene al menos un hijo a su derecha para que lo reemplace
+			 */
+			else if (raiz.genero.getNombre().equals(genero.getNombre()) && !raiz.hijoDer.arbolVacio()) {
 				raiz.genero = this.menor(raiz.hijoDer);
 				raiz.hijoDer.eliminarGenero(raiz.genero);
-			}else if (raiz.genero.getNombre().compareTo(genero.getNombre()) < 0){
+			}
+			/**
+			 * Si el Género buscado es alfabéticamente mayor al Género del Arbol lo buscamos en su hijo derecho
+			 */
+			else if (raiz.genero.getNombre().compareTo(genero.getNombre()) < 0) {
 				raiz.hijoDer.eliminarGenero(genero);
-			}else{
+			}
+			/**
+			 * Si el Género buscado es alfabéticamente menor al Género del Arbol lo buscamos en su hijo izquierdo
+			 */
+			else {
 				raiz.hijoIzq.eliminarGenero(genero);
 			}
 		}
@@ -68,19 +90,23 @@ public class ABBCatalogo implements ABBTDACatalogo{
 
 	@Override
 	public void eliminarLibro(Libro libro) {
-		if(raiz.genero.getNombre().equals(libro.getGenero())){
+		/**
+		 * Si fue hallado el Género del Libro
+		 * 
+		 * TODO Sacar [!raiz.hijoDer.arbolVacio() &&]
+		 */
+		if (raiz.genero.getNombre().equals(libro.getGenero())) {
 			raiz.genero.borrarLibro(libro);
-			if(raiz.genero.getLibros().colaVacia())
+			if (raiz.genero.getLibros().colaVacia()) // Si el Género no tiene mas libros
 				eliminarGenero(raiz.genero);
-		}else if(!raiz.hijoDer.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) < 0){
+		} else if (!raiz.hijoDer.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) < 0) { // Si el Genero del Libro es menor alfabéticamente
 			raiz.hijoDer.eliminarLibro(libro);
-		}else if(!raiz.hijoIzq.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0){
+		} else if (!raiz.hijoIzq.arbolVacio() && raiz.genero.getNombre().compareTo(libro.getGenero()) > 0) { // Si el Genero del Libro es mayor alfabéticamente
 			raiz.hijoIzq.eliminarLibro(libro);
-		}else{
+		} else {
 			System.out.println("El libro no existe para ser eliminado.");
 			return;
 		}
-		
 	}
 
 	@Override
@@ -97,19 +123,27 @@ public class ABBCatalogo implements ABBTDACatalogo{
 	public ABBTDACatalogo hijoDer() {
 		return raiz.hijoDer;
 	}
-	
-	private Genero menor(ABBTDACatalogo a) {
-		if (a.hijoIzq().arbolVacio())
-			return a.obtenerGenero();
+
+	/**
+	 * @param arbol
+	 * @return el menor {@link Genero} alfabéticamente
+	 */
+	private Genero menor(ABBTDACatalogo arbol) {
+		if (arbol.hijoIzq().arbolVacio())
+			return arbol.obtenerGenero();
 		else
-			return menor(a.hijoIzq());
+			return menor(arbol.hijoIzq());
 	}
 
-	private Genero mayor(ABBTDACatalogo a) {
-		if (a.hijoDer().arbolVacio())
-			return a.obtenerGenero();
+	/**
+	 * @param arbol
+	 * @return el mayor {@link Genero} alfabéticamente
+	 */
+	private Genero mayor(ABBTDACatalogo arbol) {
+		if (arbol.hijoDer().arbolVacio())
+			return arbol.obtenerGenero();
 		else
-			return mayor(a.hijoDer());
+			return mayor(arbol.hijoDer());
 	}
 
 }
