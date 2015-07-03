@@ -10,9 +10,13 @@ public class Genero {
 	private ColaTDA<Libro> libros;
 
 	public Genero(String nombre) {
+		this(nombre,new Cola<Libro>());
+	}
+	
+	Genero(String nombre, ColaTDA<Libro> libros){
 		this.nombre = nombre;
-		libros = new Cola<Libro>();
-		libros.inicializarCola();
+		this.libros = libros;
+		this.libros.inicializarCola();
 	}
 
 	public String getNombre() {

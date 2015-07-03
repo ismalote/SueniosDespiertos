@@ -148,7 +148,7 @@ public class PruebaLibros {
 			/**
 			 * Si es igual
 			 */
-			if (compareResult == 0) {
+			if (compareResult == 0) { 
 				genero = arbol.obtenerGenero();
 			} else
 			/**
